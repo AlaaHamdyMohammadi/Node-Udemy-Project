@@ -10,7 +10,7 @@ exports.getAllUsers = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(404).json({
       status: "Faild",
       message: err,
     });
@@ -26,7 +26,7 @@ exports.createUser = async (req, res) => {
       data: newUser,
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(404).json({
       status: "Faild",
       message: err,
     });
@@ -43,7 +43,7 @@ exports.getUser = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(404).json({
       status: "Faild",
       message: err,
     });
@@ -54,24 +54,36 @@ exports.getUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     res.status(200).json({
       status: "Success",
-      data:{
-        user
+      data: {
+        user,
       },
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(404).json({
       status: "Faild",
       message: err,
     });
   }
 };
 
-exports.deleteUser = (req, res) => {
-  res.status(204).json({
-    status: "Success",
-    data: null,
-  });
+exports.deleteUser = async (req, res) => {
+  try {
+    //Not send back any data to the client
+    await User.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+      status: "Success",
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "Faild",
+      message: err,
+    });
+  }
 };
