@@ -3,7 +3,7 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
-  username: { type: String,required: [true, "Username is required!"] },
+  username: { type: String, required: [true, "Username is required!"] },
   email: {
     type: String,
     required: [true, "Email is required!"],
@@ -33,9 +33,9 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.pre('save', async function(next){
+userSchema.pre("save", async function (next) {
   //Encrypt password if password field is updated
-  if(!this.isModified('password')) return next();
+  if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
 
   //After check delete passwordConfirm from db
