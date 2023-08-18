@@ -63,6 +63,7 @@ exports.login = async(req, res, next) => {
 
   //3- Send token to the client
   // const token = tokenFunction(user._id);
+
   const token = jwt.sign({id: user._id }, "This-Is-Node-Project-JWT-Secret.", {
     expiresIn: "90d",
   });
@@ -79,4 +80,33 @@ exports.login = async(req, res, next) => {
     });
   }
   
+};
+
+exports.protect = async(req, res, next) => {
+  try{
+    // 1- Get token and check of it's there
+    let token;
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+      token = req.headers.authorization.split(' ')[1];
+    }
+    // console.log(token)
+    if(!token){
+      //return next('You are not logged in! Please log in to get access');
+      return res.status(401).json({
+        status: "Faild",
+        message: "You are not logged in! Please log in to get access",
+      });
+    }
+    // 2- Verification token
+
+    // 3- Check if user still exists
+
+    // 4- Check if user changed password after the jwt was issued
+
+
+  }catch(err){
+
+  }
+
+  next();
 }
