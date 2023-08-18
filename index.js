@@ -8,9 +8,6 @@ const mongoose = require('mongoose');
 app.use(express.json());
 
 
-
-
-
 //ROUTES:
 app.use("/api/v1/users", userRouter);
 
