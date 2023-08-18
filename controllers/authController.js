@@ -62,7 +62,7 @@ exports.login = async(req, res, next) => {
   }
 
   //3- Send token to the client
-  // const token = tokenFunction(user._id);
+  //const token = tokenFunction(user._id);
 
   const token = jwt.sign({id: user._id }, "This-Is-Node-Project-JWT-Secret.", {
     expiresIn: "90d",
