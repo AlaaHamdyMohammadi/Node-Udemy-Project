@@ -11,12 +11,7 @@ const tokenFunction = (id) => {
 
 exports.signup = async (req, res, next) => {
   try {
-    const newUser = await User.create({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
-    });
+    const newUser = await User.create(req.body);
 
     const token = tokenFunction(newUser._id);
     

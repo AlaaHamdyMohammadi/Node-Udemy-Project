@@ -1,4 +1,5 @@
 const User = require("./../models/userModel");
+const Course = require("./../models/courseModel");
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -35,7 +36,7 @@ exports.createUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).populate('enrolledCourses');
     res.status(200).json({
       status: "Success",
       data: {

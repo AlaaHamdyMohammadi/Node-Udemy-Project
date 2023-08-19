@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["user", "admin"],
-    default: "user", 
+    default: "user",
   },
   password: {
     type: String,
@@ -38,6 +38,7 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
   },
   passwordChangedAt: Date,
+  enrolledCourses: { type: mongoose.SchemaTypes.ObjectId, ref: "Course" },
 });
 
 userSchema.pre("save", async function (next) {
