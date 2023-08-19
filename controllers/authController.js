@@ -1,3 +1,4 @@
+const {promisify} = require("util");
 const jwt = require("jsonwebtoken");
 const User = require("./../models/userModel");
 
@@ -89,7 +90,7 @@ exports.protect = async(req, res, next) => {
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
       token = req.headers.authorization.split(' ')[1];
     }
-    // console.log(token)
+    //console.log(token)
     if(!token){
       //return next('You are not logged in! Please log in to get access');
       return res.status(401).json({
@@ -98,15 +99,52 @@ exports.protect = async(req, res, next) => {
       });
     }
     // 2- Verification token
+    const decoded = await promisify(jwt.verify)(token, "This-Is-Node-Project-JWT-Secret.");
 
     // 3- Check if user still exists
+    const newUser = await User.findById(decoded.id);
+    if(!newUser){
+      //return next();
+      return res.status(401).json({
+        status: "Faild",
+        message: "The user to this token is not exist",
+      });
+    }
 
     // 4- Check if user changed password after the jwt was issued
+    if(newUser.changedPasswordAfter(decoded.iat)){
+      return res.status(401).json({
+        status: "Faild",
+        message: "User changed the password! Please login again",
+      });
+    };
 
+    //Grant access to protected route
+    req.user = newUser;
+    next();
 
   }catch(err){
-
+    res.status(404).json({
+      status: "Faild",
+      message: err,
+    });
   }
 
-  next();
+  
 }
+
+//Restrict certain routes(ex: deleting course) only to user roles
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    
+    if(!roles.includes(req.user.role)){
+      return res.status(403).json({
+        status: "Faild",
+        message: "You do not have a permission",
+      });
+    }
+    next();
+  }
+}
+
+

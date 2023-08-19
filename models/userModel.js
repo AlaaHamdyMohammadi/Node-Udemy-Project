@@ -11,6 +11,11 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validator: [validator.isEmail, "Please write a valid email"],
   },
+  role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user", 
+  },
   password: {
     type: String,
     required: [true, "Please provide a password!"],
@@ -32,6 +37,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  passwordChangedAt: Date,
 });
 
 userSchema.pre("save", async function (next) {
@@ -48,9 +54,22 @@ userSchema.pre("save", async function (next) {
     //Instance method is available on all documents of the collection
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
   
-  //Compare it return true or false
+  //Compare method: return true or false
   return await bcrypt.compare(candidatePassword, userPassword);
-}    
+}   
+
+userSchema.methods.changedPasswordAfter = function(jwtTimestamp){
+  
+  if (this.passwordChangedAt){
+    const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+    console.log(this.passwordChangedAt, jwtTimestamp);
+    return jwtTimestamp < changedTimestamp;
+  }
+    //By default the user not changed his password
+    return false;
+};
+
+
 
 const User = mongoose.model("User", userSchema);
 
