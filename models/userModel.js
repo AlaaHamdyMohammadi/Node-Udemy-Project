@@ -1,3 +1,4 @@
+const crybto = require("crypto");
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
@@ -13,7 +14,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["user", "admin"],
+    enum: ["user", "instructor", "admin"],
     default: "user",
   },
   password: {
@@ -33,11 +34,13 @@ const userSchema = new mongoose.Schema({
       message: "Passwords are not the same!",
     },
   },
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  passwordChangedAt: Date,
   enrolledCourses: { type: mongoose.SchemaTypes.ObjectId, ref: "Course" },
 });
 
@@ -68,6 +71,25 @@ userSchema.methods.changedPasswordAfter = function(jwtTimestamp){
   }
     //By default the user not changed his password
     return false;
+};
+
+//save data in encrypted form and compare it with encrypted version in db
+userSchema.methods.createPasswordToken = function () {
+  //Generate random token
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  //Encryption
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  console.log({resetToken} , this.passwordResetToken);
+
+  //Expires after 10 min : min(10) * sec(60) * millisec(1000)
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 

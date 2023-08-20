@@ -131,7 +131,6 @@ exports.protect = async(req, res, next) => {
 //Restrict certain routes(ex: deleting course) only to user roles
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    
     if(!roles.includes(req.user.role)){
       return res.status(403).json({
         status: "Faild",
@@ -142,4 +141,32 @@ exports.restrictTo = (...roles) => {
   }
 }
 
+//Reset Password Steps
+//1- User send post request to forget password route(this create reset token and send to email)
+exports.forgetPassword = async(req, res, next) => {
+  //try{
+    // 1- Get user based on posted email
+    const user = await User.find({email: req.body.email});
+    if(!user){
+      return res.status(404).json({
+        status: "Faild",
+        message: "There is no user with email address",
+      });
+    }
+    // 2- Generate reset token 
+    const resetToken = user.createPasswordToken();
+    await user.save({validateBeforeSave: false})
+    
+    // 3- Send it to user's email
+  // }catch(err){
+  //   res.status(404).json({
+  //     status: "Faild err",
+  //     message: err,
+  //   });
+  // }
+}
+
+
+//2- User send this token from email with a new password to update it
+exports.resetPassword = (req, res, next) => {};
 

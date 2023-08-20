@@ -6,15 +6,18 @@ const courseRouter = express.Router();
 
 courseRouter
   .route("/")
-  .get(authController.protect ,courseController.getAllUCourse)
-  .post(courseController.createCourse);
+  .get(authController.protect, courseController.getAllUCourse)
+  .post(
+    authController.restrictTo("instructor", "admin"),
+    courseController.createCourse
+  );
 courseRouter
   .route("/:id")
   .get(courseController.getCourse)
   .patch(courseController.updateCourse)
   .delete(
     authController.protect,
-    authController.restrictTo('admin'), //passed role that allawed to interact with this resource (return middleware)
+    authController.restrictTo("instructor", "admin"), //passed role that allawed to interact with this resource (return middleware)
     courseController.deleteCourse
   );
 

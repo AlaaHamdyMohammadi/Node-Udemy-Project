@@ -1,5 +1,4 @@
 const User = require("./../models/userModel");
-const Course = require("./../models/courseModel");
 
 exports.getAllUsers = async (req, res) => {
   try {
