@@ -13,6 +13,23 @@ app.use(express.json());
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/courses", courseRouter);
 
+
+//Error Handleing
+app.use('*', function(req, res,next){
+    res.status(404).json({
+        status: 'Faild',
+        message: 'Not Found',
+    })
+    next();
+});
+
+app.use(function(err, req, res, next){
+    res.status(500).json({
+        status: 'Faild',
+        message: 'Error',
+    })
+})
+
 mongoose
   .connect(
     "mongodb+srv://GraduationProject:iti-team2@cluster0.daxyxcz.mongodb.net/projectNode?retryWrites=true&w=majority"

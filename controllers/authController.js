@@ -164,7 +164,7 @@ exports.forgetPassword = async(req, res, next) => {
   //     message: err,
   //   });
   // }
-}
+} 
 
 
 //2- User send this token from email with a new password to update it
