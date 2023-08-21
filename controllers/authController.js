@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const User = require("./../models/userModel");
@@ -163,8 +164,8 @@ exports.forgetPassword = async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // 3- Send it to user's email
-  // const resetURL = `${req.protocol}://${req.get("host")}/api/v1/users/resetPassword/${resetToken}`;
-  const resetURL = `${req.protocol}://127.0.0.1:4000/api/v1/users/resetPassword/${resetToken}`;
+  const resetURL = `${req.protocol}://${req.get("host")}/api/v1/users/resetPassword/${resetToken}`;
+  //const resetURL = `${req.protocol}://127.0.0.1:4000/api/v1/users/resetPassword/${resetToken}`;
 
   const message = `Forget your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
   
@@ -194,4 +195,54 @@ exports.forgetPassword = async (req, res, next) => {
 };
 
 //2- User send this token from email with a new password to update it
-exports.resetPassword = (req, res, next) => {};
+// exports.resetPassword = async(req, res, next) => {
+
+//   try{
+//     // 1- Get user based on the token(Encrypt token again and compare it with encrypted one in db)
+
+//     const hashedToken = crypto
+//       .createHash("sha256")
+//       .update(req.params.token) // :token in resetPassword Route
+//       .digest("hex");
+
+//     const user = await User.findOne({
+//       passwordResetToken: hashedToken,
+//       passwordResetExpires: { $gt: Date.now() },
+//     });
+
+//     // 2- Set password if token has not expired
+//     if (!user) {
+//       res.status(400).json({
+//         status: "Faild",
+//         message: "Token is invalid or expired!",
+//       });
+//     }
+
+//     user.password = req.body.password;
+//     user.passwordConfirm = req.body.passwordConfirm;
+//     user.passwordResetToken = undefined;
+//     user.passwordResetExpires = undefined;
+//     await user.save();
+
+//     // 3- Update changedPasswordAt property for the user
+
+//     // 4- Log the user in, send JWT
+//     const token = jwt.sign(
+//       { id: user._id },
+//       "This-Is-Node-Project-JWT-Secret.",
+//       {
+//         expiresIn: "90d",
+//       }
+//     );
+
+//     res.status(200).json({
+//       status: "Success",
+//       data: { token },
+//     });
+//   }catch(err){
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
+//     });
+//   }
+// };

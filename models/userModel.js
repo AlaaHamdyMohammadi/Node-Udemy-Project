@@ -54,6 +54,19 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+
+//This function will be run before a new document is actually saved
+/*
+userSchema.pre('save', function(next){
+  //If password not changed or not create new document
+  if (!this.isModified("password") || this.isNew) return next();
+
+  // -1000: To put passwordChangedAt one second in the past to ensure the token is always created after the password has been changed
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+})
+*/
+
 //To check if the given password is the same as the one stored in the document
     //Instance method is available on all documents of the collection
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
@@ -75,10 +88,10 @@ userSchema.methods.changedPasswordAfter = function(jwtTimestamp){
 
 //save data in encrypted form and compare it with encrypted version in db
 userSchema.methods.createPasswordToken = function () {
-  //Generate random token
+  //Generate reset token(not encrypted)
   const resetToken = crypto.randomBytes(32).toString("hex");
 
-  //Encryption
+  //Encryption in db
   this.passwordResetToken = crypto
     .createHash("sha256")
     .update(resetToken)
