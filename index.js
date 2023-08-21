@@ -23,12 +23,12 @@ app.use('*', function(req, res,next){
     next();
 });
 
-app.use(function(err, req, res, next){
-    res.status(500).json({
-        status: 'Faild',
-        message: 'Error',
-    })
-})
+// app.use(function(err, req, res, next){
+//     res.status(500).json({
+//         status: 'Faild',
+//         message: 'Error 1',
+//     })
+// })
 
 mongoose
   .connect(
