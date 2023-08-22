@@ -3,7 +3,7 @@ const courseController = require("./../controllers/courseController");
 const authController = require("./../controllers/authController");
 
 const courseRouter = express.Router();
-
+ 
 courseRouter
   .route("/")
   .get(authController.protect, courseController.getAllUCourse)

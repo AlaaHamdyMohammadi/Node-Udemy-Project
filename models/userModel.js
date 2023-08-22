@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validator: [validator.isEmail, "Please write a valid email"],
   },
+  photo: {
+    type: String,
+    default: 'default.jpg'
+  },
   role: {
     type: String,
     enum: ["user", "instructor", "admin"],
@@ -68,7 +72,7 @@ userSchema.pre('save', function(next){
 */
 
 //To check if the given password is the same as the one stored in the document
-    //Instance method is available on all documents of the collection
+    //Instance methods is available on all documents of the collection
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
   
   //Compare method: return true or false
