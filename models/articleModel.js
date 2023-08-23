@@ -16,10 +16,13 @@ articleSchema = new Schema(
       type: String,
       required: true,
     },
-    images: {
+    photo: {
       type: String,
     },
-    adminID: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    category: {
+      type: String,
+    },
+    //adminID: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );

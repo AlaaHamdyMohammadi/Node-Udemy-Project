@@ -1,7 +1,8 @@
-const User = require("./../models/userModel");
 const multer = require("multer");
+const sharp = require("sharp");
+const User = require("./../models/userModel");
 
-
+/*
 const multerStorage = multer.diskStorage({
   // destination is a callback function
   destination: (req, file, cb) => {
@@ -15,16 +16,20 @@ const multerStorage = multer.diskStorage({
     //cb(null, `user-${file.originalname}-${Date.now()}.${extention}`);
   }
 });
+*/
+
+//In image processing after uploading the file, the best to save it in memory(the image will then stored as a buffer)
+const multerStorage = multer.memoryStorage();
 
 //This function to test if the uploaded file is an image or not
 const multerFilter = (req, file, cb) => {
   //mimetype always contain image word to check
-  if(file.mimetype.startsWith('image')){
+  if (file.mimetype.startsWith("image")) {
     cb(null, true);
-  }else{
-    cb('Not an image! Please upload only images.', false);
+  } else {
+    cb("Not an image! Please upload only images.", false);
   }
-}
+};
 
 //Images are not directly uploaded into the db, just upload them into file system, and then in db we put a link to that image.
 // const upload = multer({dest: 'public/img/users'});
@@ -35,6 +40,19 @@ const upload = multer({
 
 exports.uploadUserPhoto = upload.single("photo");
 
+exports.resizeUserPhoto = (req, res, next) => {
+  if (!req.file) return next();
+
+  req.file.filename = `user-${req.params.id}-${Date.now()}.jpeg`;
+
+  sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/users/${req.file.filename}`);
+  
+  next();  
+};
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -73,7 +91,7 @@ exports.createUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate('enrolledCourses');
+    const user = await User.findById(req.params.id).populate("enrolledCourses");
     res.status(200).json({
       status: "Success",
       data: {
@@ -97,28 +115,27 @@ exports.updateUser = async (req, res) => {
     const { id } = req.params;
 
     if (req.file) {
-      // let user = await User.findById(id);
-      // console.log("Test1");
-      // if (!user) {
-      //   return res.status(404).json({
-      //     status: "Failed",
-      //     message: "User not found",
-      //   });
-      // }
-
-      const photo = req.file.path;
+      
+      // const photo = req.file.path;
+      const photo = req.file.originalname;
+      console.log(req.file);
       // await User.findByIdAndUpdate(id, {photo});
-      const user = await User.findByIdAndUpdate(id, { photo, ...req.body },{
-      new: true,
-      runValidators: true,
-    });
-    console.log('working 1')
+      const user = await User.findByIdAndUpdate(
+        id,
+        { photo, ...req.body },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      console.log("working 1");
       return res.status(200).json({
         status: "Success",
         data: {
           user,
         },
       });
+      console.log(req.file.filename);
       // console.log(req.file.path);
       // console.log("Test2");
     }
@@ -127,6 +144,7 @@ exports.updateUser = async (req, res) => {
       new: true,
       runValidators: true,
     });
+    console.log('working2');
     res.status(200).json({
       status: "Success",
       data: {

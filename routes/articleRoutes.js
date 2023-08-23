@@ -21,8 +21,7 @@ router.get(
 );
 router.patch(
   "/:id",
-  authController.restrictTo("admin"),
-  articles.updateArticle
+  authController.restrictTo("admin"),articles.updateArticle
 );
 router.delete(
   "/:id",
