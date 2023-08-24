@@ -4,11 +4,11 @@ const sendEmail = async options => {
 //Steps to send emails with nodeMailer:
     // 1- Create transporter(service to send email)
     const transporter = nodemailer.createTransport({
-      host: "sandbox.smtp.mailtrap.io",
+      host: "smtp.mailtrap.io",
       port: 25,
       auth: {
-        user: "8dc4aaee2aed46",
-        pass: "72c3388187ba63",
+        user: "3f6a46d903c578",
+        pass: "2cde4ae95e12bd",
       },
     });
 

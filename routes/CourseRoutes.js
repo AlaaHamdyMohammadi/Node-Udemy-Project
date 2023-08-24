@@ -8,9 +8,10 @@ courseRouter
   .route("/")
   .get(authController.protect, courseController.getAllCourse)
   .post(
-    // authController.restrictTo("instructor", "admin"),
+    authController.protect,
+    authController.restrictTo("instructor", "admin"),
     courseController.createCourse
-  ); //authController.restrictTo("instructor", "admin"),
+  ); 
 courseRouter
   .route("/:id")
   .get(courseController.getCourse)

@@ -58,7 +58,7 @@ exports.login = async (req, res, next) => {
     }
 
     //3- Send token to the client
-    //const token = tokenFunction(user._id);
+    //const token = tokenFunction(user._id); (This calling function not working in login! and I don't have any reason for that.)
 
     const token = jwt.sign(
       { id: user._id },
@@ -144,7 +144,7 @@ exports.restrictTo = (...roles) => {
     }
     next();
   };
-};
+}; 
 
 //Reset Password Steps
 //1- User send post request to forget password route(this create reset token and send to email)
@@ -162,11 +162,10 @@ exports.forgetPassword = async (req, res, next) => {
   const resetToken = user.createPasswordToken();
 
   await user.save({ validateBeforeSave: false });
-
+  
   // 3- Send it to user's email
   const resetURL = `${req.protocol}://${req.get("host")}/api/v1/users/resetPassword/${resetToken}`;
-  //const resetURL = `${req.protocol}://127.0.0.1:4000/api/v1/users/resetPassword/${resetToken}`;
-
+  console.log(resetURL);
   const message = `Forget your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
   
   try {
@@ -175,17 +174,23 @@ exports.forgetPassword = async (req, res, next) => {
       subject: "Your password reset token (valid for 10 min)",
       message,
     });
+    
     res.status(200).json({
       status: "Success",
       message: "Token send to email",
-    });
+    }); 
   } catch (err) {
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
 
-    return next('There was an error sending the email. Try again later!');
+    //return next('There was an error sending the email. Try again later!');
+    return res.status(500).json({
+      status: "Faild err",
+      message: "There was an error sending the email. Try again later!",
+    });
   }
+  
   // }catch(err){
   //   res.status(404).json({
   //     status: "Faild err",

@@ -32,7 +32,6 @@ const multerFilter = (req, file, cb) => {
 };
 
 //Images are not directly uploaded into the db, just upload them into file system, and then in db we put a link to that image.
-// const upload = multer({dest: 'public/img/users'});
 const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
@@ -119,7 +118,6 @@ exports.updateUser = async (req, res) => {
       // const photo = req.file.path;
       const photo = req.file.originalname;
       console.log(req.file);
-      // await User.findByIdAndUpdate(id, {photo});
       const user = await User.findByIdAndUpdate(
         id,
         { photo, ...req.body },
@@ -128,23 +126,19 @@ exports.updateUser = async (req, res) => {
           runValidators: true,
         }
       );
-      console.log("working 1");
       return res.status(200).json({
         status: "Success",
         data: {
           user,
         },
       });
-      console.log(req.file.filename);
-      // console.log(req.file.path);
-      // console.log("Test2");
+      //console.log(req.file.filename);
     }
 
     const user = await User.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
     });
-    console.log('working2');
     res.status(200).json({
       status: "Success",
       data: {

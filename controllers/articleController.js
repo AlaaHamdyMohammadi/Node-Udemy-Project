@@ -42,7 +42,6 @@ const createArticle = (req, res) => {
 };
 
 //get all articles
-  //get all articles
 const getAllArticles = (req, res) => {
     //pagination
     const page = req.query.p || 1;
@@ -70,6 +69,7 @@ const getAllArticles = (req, res) => {
         getArticles(articles, res);
     }
 }
+
 
 function getArticles(articles, res) {
     articles.then((result) => {
