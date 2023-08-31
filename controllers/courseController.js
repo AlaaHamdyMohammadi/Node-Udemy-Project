@@ -52,6 +52,7 @@ exports.getAllCourse = async (req, res) => {
       .limit(numOfCourses);
     res.status(200).json({
       status: "Success",
+      results: courses.length,
       data: {
         courses,
       },

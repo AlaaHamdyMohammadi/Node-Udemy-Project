@@ -3,6 +3,7 @@ const app = express();
 const userRouter = require('./routes/userRoutes');
 const courseRouter = require('./routes/courseRoutes');
 const articleRouter = require("./routes/articleRoutes");
+const reviewRouter = require("./routes/reviewRoutes");
 const buyingRouter = require("./routes/buyingRoutes");
 const mongoose = require('mongoose');
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/courses", courseRouter);
 app.use("/api/v1/articles", articleRouter);
+app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/buyings", buyingRouter);
 
 
