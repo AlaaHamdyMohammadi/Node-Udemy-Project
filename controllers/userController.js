@@ -91,11 +91,12 @@ exports.createUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate("enrolledCourses");
+    //.populate("enrolledCourses")
+    const user = await User.findById(req.params.id);
     res.status(200).json({
       status: "Success",
       data: {
-        user,
+        user, 
       },
     });
   } catch (err) {

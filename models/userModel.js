@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  enrolledCourses: { type: mongoose.SchemaTypes.ObjectId, ref: "Course" },
+  //enrolledCourses: { type: mongoose.SchemaTypes.ObjectId, ref: "Course" },
 });
 
 userSchema.pre("save", async function (next) {
