@@ -17,7 +17,6 @@ const courseSchema = new mongoose.Schema({
 
 courseSchema.pre(/^find/, function(next){
   this.populate({ path: "users", select: '-__v' });
-
   next();
 })
 
