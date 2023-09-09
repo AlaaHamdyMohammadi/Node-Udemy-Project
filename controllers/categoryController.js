@@ -1,6 +1,6 @@
 const Category = require("./../models/categoryModel");
 
-exports.getAllCategories = async (req, res, next) => {
+exports.getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find();
     res.status(200).json({
@@ -16,7 +16,7 @@ exports.getAllCategories = async (req, res, next) => {
   }
 };
 
-exports.getCategory = async (req, res, next) => {
+exports.getCategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
     res.status(200).json({
@@ -31,7 +31,7 @@ exports.getCategory = async (req, res, next) => {
   }
 };
 
-exports.createCategory = async (req, res, next) => {
+exports.createCategory = async (req, res) => {
   try {
     const newCategory = await Category.create(req.body);
     res.status(200).json({
@@ -46,7 +46,7 @@ exports.createCategory = async (req, res, next) => {
   }
 };
 
-exports.updateCategory = async (req, res, next) => {
+exports.updateCategory = async (req, res) => {
   try {
     const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
