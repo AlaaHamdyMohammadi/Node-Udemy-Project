@@ -1,5 +1,6 @@
 const Course = require("./../models/courseModel");
 const multer = require("multer");
+const factory = require('./handlerFactory');
 
 const multerStorage = multer.diskStorage({
   // destination is a callback function
@@ -68,6 +69,7 @@ exports.getAllCourse = async (req, res) => {
 exports.createCourse = async (req, res) => {
   try {
     // console.log(req.body);
+    // req.body.userId = userId;
     const newCourse = await Course.create(req.body);
     res.status(201).json({
       status: "Success",
@@ -142,18 +144,20 @@ exports.updateCourse = async (req, res) => {
   }
 };
 
-exports.deleteCourse = async (req, res) => {
-  try {
-    //Not send back any data to the client
-    await Course.findByIdAndDelete(req.params.id);
-    res.status(204).json({
-      status: "Success",
-      data: null,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "Faild",
-      message: err,
-    });
-  }
-};
+// exports.deleteCourse = async (req, res) => {
+//   try {
+//     //Not send back any data to the client
+//     await Course.findByIdAndDelete(req.params.id);
+//     res.status(204).json({
+//       status: "Success",
+//       data: null,
+//     });
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
+//     });
+//   }
+// };
+
+exports.deleteCourse = factory.deleteOne(Course);

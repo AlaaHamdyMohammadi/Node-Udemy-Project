@@ -103,6 +103,7 @@ exports.protect = async (req, res, next) => {
       token,
       "This-Is-Node-Project-JWT-Secret."
     );
+    req.id = decoded.id;
 
     // 3- Check if user still exists
     const newUser = await User.findById(decoded.id);

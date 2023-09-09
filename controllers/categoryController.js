@@ -1,4 +1,5 @@
 const Category = require("./../models/categoryModel");
+const factory = require('./handlerFactory');
 
 exports.getAllCategories = async (req, res) => {
   try {
@@ -64,17 +65,19 @@ exports.updateCategory = async (req, res) => {
   }
 };
 
-exports.deleteCategory = async(req, res) => {
-    try{
-        const category = await Category.findByIdAndDelete(req.params.id);
-        res.status(200).json({
-            status: 'Success',
-            data: null,
-        });
-    }catch(err){
-        res.status(404).json({
-          status: "Faild",
-          message: err,
-        });
-    }
-};
+// exports.deleteCategory = async(req, res) => {
+//     try{
+//         const category = await Category.findByIdAndDelete(req.params.id);
+//         res.status(200).json({
+//             status: 'Success',
+//             data: null,
+//         });
+//     }catch(err){
+//         res.status(404).json({
+//           status: "Faild",
+//           message: err,
+//         });
+//     }
+// };
+
+exports.deleteCategory = factory.deleteOne(Category);

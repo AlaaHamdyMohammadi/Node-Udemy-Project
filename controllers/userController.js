@@ -1,7 +1,7 @@
 const multer = require("multer");
 const sharp = require("sharp");
 const User = require("./../models/userModel");
-
+const factory = require('./handlerFactory');
 /*
 const multerStorage = multer.diskStorage({
   // destination is a callback function
@@ -155,18 +155,20 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-exports.deleteUser = async (req, res) => {
-  try {
-    //Not send back any data to the client
-    await User.findByIdAndDelete(req.params.id);
-    res.status(204).json({
-      status: "Success",
-      data: null,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "Faild",
-      message: err,
-    });
-  }
-};
+// exports.deleteUser = async (req, res) => {
+//   try {
+//     //Not send back any data to the client
+//     await User.findByIdAndDelete(req.params.id);
+//     res.status(204).json({
+//       status: "Success",
+//       data: null,
+//     });
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
+//     });
+//   }
+// };
+
+exports.deleteUser = factory.deleteOne(User);

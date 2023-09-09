@@ -1,4 +1,5 @@
 const Review = require("./../models/reviewModel");
+const factory = require('./handlerFactory');
 
 exports.getAllReviews = async (req, res, next) => {
   const reviews = await Review.find();
@@ -16,3 +17,5 @@ exports.createReview = async (req, res, next) => {
     data: { review },
   });
 };
+
+exports.deleteReview = factory.deleteOne(Review);
