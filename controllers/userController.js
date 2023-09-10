@@ -53,23 +53,23 @@ exports.resizeUserPhoto = (req, res, next) => {
   next();  
 };
 
-exports.getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json({
-      status: "Success",
-      results: users.length,
-      data: {
-        users,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "Faild",
-      message: err,
-    });
-  }
-};
+// exports.getAllUsers = async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     res.status(200).json({
+//       status: "Success",
+//       results: users.length,
+//       data: {
+//         users,
+//       },
+//     });
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
+//     });
+//   }
+// };
 
 exports.createUser = async (req, res) => {
   // console.log(req.file);
@@ -89,25 +89,25 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.getUser = async (req, res) => {
-  try {
-    //.populate("enrolledCourses")
-    const user = await User.findById(req.params.id);
-    res.status(200).json({
-      status: "Success",
-      data: {
-        user, 
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "Faild",
-      message: err,
-    });
-  }
+// exports.getUser = async (req, res) => {
+//   try {
+//     //.populate("enrolledCourses")
+//     const user = await User.findById(req.params.id);
+//     res.status(200).json({
+//       status: "Success",
+//       data: {
+//         user, 
+//       },
+//     });
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
+//     });
+//   }
 
-  // console.log(req.body);
-};
+//   // console.log(req.body);
+// };
 
 exports.updateUser = async (req, res) => {
   // console.log(req.file);
@@ -171,4 +171,6 @@ exports.updateUser = async (req, res) => {
 //   }
 // };
 
+exports.getAllUsers = factory.getAll(User);
+exports.getUser = factory.getOne(User);
 exports.deleteUser = factory.deleteOne(User);

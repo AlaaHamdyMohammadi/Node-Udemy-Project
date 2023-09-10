@@ -17,20 +17,20 @@ exports.getAllCategories = async (req, res) => {
   }
 };
 
-exports.getCategory = async (req, res) => {
-  try {
-    const category = await Category.findById(req.params.id);
-    res.status(200).json({
-      status: "Success",
-      data: { category },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "Faild",
-      message: err,
-    });
-  }
-};
+// exports.getCategory = async (req, res) => {
+//   try {
+//     const category = await Category.findById(req.params.id);
+//     res.status(200).json({
+//       status: "Success",
+//       data: { category },
+//     });
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
+//     });
+//   }
+// };
 
 // exports.createCategory = async (req, res) => {
 //   try {
@@ -80,6 +80,9 @@ exports.getCategory = async (req, res) => {
 //     }
 // };
  
+
+exports.getAllCategories = factory.getAll(Category);
+exports.getCategory = factory.getOne(Category);
 exports.createCategory = factory.createOne(Category);
 exports.updateCategory = factory.updateOne(Category);
 exports.deleteCategory = factory.deleteOne(Category);

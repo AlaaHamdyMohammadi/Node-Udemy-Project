@@ -15,7 +15,8 @@ reviewRoute
 
 reviewRoute
   .route("/:id")
+  .get(reviewController.getReview)
   .patch(reviewController.updateReview)
-  .delete(reviewController.deleteReview);  
+  .delete(reviewController.deleteReview);
 
 module.exports = reviewRoute;
