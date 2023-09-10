@@ -66,42 +66,6 @@ exports.getAllCourse = async (req, res) => {
   }
 };
 
-// exports.createCourse = async (req, res) => {
-//   try {
-//     // console.log(req.body);
-//     // req.body.userId = userId;
-//     const newCourse = await Course.create(req.body);
-//     res.status(201).json({
-//       status: "Success",
-//       data: newCourse,
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       status: "Faild",
-//       message: err,
-//     });
-//   }
-// };
-
-// exports.getCourse = async (req, res) => {
-//   try {
-//     const course = await Course.findById(req.params.id);
-//     res.status(200).json({
-//       status: "Success",
-//       data: {
-//         course,
-//       },
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       status: "Faild",
-//       message: err,
-//     });
-//   }
-
-//   // console.log(req.body);
-// };
-
 exports.updateCourse = async (req, res) => {
   try {
     const { id } = req.params;
@@ -143,22 +107,6 @@ exports.updateCourse = async (req, res) => {
     });
   }
 };
-
-// exports.deleteCourse = async (req, res) => {
-//   try {
-//     //Not send back any data to the client
-//     await Course.findByIdAndDelete(req.params.id);
-//     res.status(204).json({
-//       status: "Success",
-//       data: null,
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       status: "Faild",
-//       message: err,
-//     });
-//   }
-// };
 
 exports.getCourse = factory.getOne(Course);
 exports.createCourse = factory.createOne(Course);

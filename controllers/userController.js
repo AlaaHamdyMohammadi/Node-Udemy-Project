@@ -2,21 +2,6 @@ const multer = require("multer");
 const sharp = require("sharp");
 const User = require("./../models/userModel");
 const factory = require('./handlerFactory');
-/*
-const multerStorage = multer.diskStorage({
-  // destination is a callback function
-  destination: (req, file, cb) => {
-    //null => Means not have an error
-    cb(null, "public/img/users");
-  },
-  filename: (req, file, cb) => {
-    //const content = req.user.id;
-    const extention = file.mimetype.split('/')[1];
-    cb(null, `user-${req.params.id}-${Date.now()}.${extention}`);
-    //cb(null, `user-${file.originalname}-${Date.now()}.${extention}`);
-  }
-});
-*/
 
 //In image processing after uploading the file, the best to save it in memory(the image will then stored as a buffer)
 const multerStorage = multer.memoryStorage();
@@ -53,24 +38,6 @@ exports.resizeUserPhoto = (req, res, next) => {
   next();  
 };
 
-// exports.getAllUsers = async (req, res) => {
-//   try {
-//     const users = await User.find();
-//     res.status(200).json({
-//       status: "Success",
-//       results: users.length,
-//       data: {
-//         users,
-//       },
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       status: "Faild",
-//       message: err,
-//     });
-//   }
-// };
-
 exports.createUser = async (req, res) => {
   // console.log(req.file);
   // console.log(req.body);
@@ -88,26 +55,6 @@ exports.createUser = async (req, res) => {
     });
   }
 };
-
-// exports.getUser = async (req, res) => {
-//   try {
-//     //.populate("enrolledCourses")
-//     const user = await User.findById(req.params.id);
-//     res.status(200).json({
-//       status: "Success",
-//       data: {
-//         user, 
-//       },
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       status: "Faild",
-//       message: err,
-//     });
-//   }
-
-//   // console.log(req.body);
-// };
 
 exports.updateUser = async (req, res) => {
   // console.log(req.file);
@@ -154,22 +101,6 @@ exports.updateUser = async (req, res) => {
     });
   }
 };
-
-// exports.deleteUser = async (req, res) => {
-//   try {
-//     //Not send back any data to the client
-//     await User.findByIdAndDelete(req.params.id);
-//     res.status(204).json({
-//       status: "Success",
-//       data: null,
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       status: "Faild",
-//       message: err,
-//     });
-//   }
-// };
 
 exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);
