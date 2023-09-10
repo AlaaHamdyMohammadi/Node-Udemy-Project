@@ -66,22 +66,22 @@ exports.getAllCourse = async (req, res) => {
   }
 };
 
-exports.createCourse = async (req, res) => {
-  try {
-    // console.log(req.body);
-    // req.body.userId = userId;
-    const newCourse = await Course.create(req.body);
-    res.status(201).json({
-      status: "Success",
-      data: newCourse,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "Faild",
-      message: err,
-    });
-  }
-};
+// exports.createCourse = async (req, res) => {
+//   try {
+//     // console.log(req.body);
+//     // req.body.userId = userId;
+//     const newCourse = await Course.create(req.body);
+//     res.status(201).json({
+//       status: "Success",
+//       data: newCourse,
+//     });
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
+//     });
+//   }
+// };
 
 exports.getCourse = async (req, res) => {
   try {
@@ -160,4 +160,5 @@ exports.updateCourse = async (req, res) => {
 //   }
 // };
 
+exports.createCourse = factory.createOne(Course);
 exports.deleteCourse = factory.deleteOne(Course);
