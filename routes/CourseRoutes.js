@@ -11,7 +11,7 @@ courseRouter
     authController.protect,
     authController.restrictTo("instructor", "admin"),
     courseController.createCourse
-  ); 
+  );   
 courseRouter
   .route("/:id")
   .get(courseController.getCourse)

@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require("cors");
 const app = express();
 const userRouter = require('./routes/userRoutes');
 const courseRouter = require('./routes/courseRoutes');
@@ -10,6 +11,14 @@ const enrolledRouter = require('./routes/enrolledRoutes');
 const buyingRouter = require("./routes/buyingRoutes");
 const mongoose = require('mongoose');
 
+
+app.use(
+  cors({
+    //any domain
+    origin: "*",
+    methods: "GET POST PATCH DELETE",
+  })
+);
 
 //MIDDLEWARE to modify incoming request data :
 app.use(express.json());
