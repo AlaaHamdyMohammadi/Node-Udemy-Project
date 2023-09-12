@@ -38,12 +38,20 @@ exports.resizeUserPhoto = (req, res, next) => {
   next();  
 };
 
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
+
 exports.createUser = async (req, res) => {
   // console.log(req.file);
   // console.log(req.body);
   try {
     // console.log(req.body);
-    const newUser = await User.create(req.body);
+    const newUser = await User.create({
+      ...req.body,
+      enrolledCourses: req.user.id,
+    });
     res.status(201).json({
       status: "Success",
       data: newUser,

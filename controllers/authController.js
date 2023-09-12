@@ -103,7 +103,7 @@ exports.protect = async (req, res, next) => {
       token,
       "This-Is-Node-Project-JWT-Secret."
     );
-    req.id = decoded.id;
+    
 
     // 3- Check if user still exists
     const newUser = await User.findById(decoded.id);
@@ -122,9 +122,11 @@ exports.protect = async (req, res, next) => {
         message: "User changed the password! Please login again",
       });
     }
-
+ 
     //Grant access to protected route
     req.user = newUser;
+    // console.log(newUser);
+    req.id = decoded.id;
     next();
   } catch (err) {
     res.status(404).json({

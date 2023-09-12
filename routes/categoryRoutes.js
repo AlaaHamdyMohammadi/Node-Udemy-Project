@@ -6,13 +6,13 @@ const categoryRoute = express.Router();
 
 categoryRoute
   .route("/")
-  .get(categoryController.getAllCategories)
-  .post(categoryController.createCategory);
+  .get(categoryController.getAllCategories) //protect? 
+  .post(categoryController.createCategory); //admin
 
 categoryRoute
   .route("/:id")
   .get(categoryController.getCategory)
-  .patch(categoryController.updateCategory)
-  .delete(categoryController.deleteCategory);
+  .patch(categoryController.updateCategory) //admin
+  .delete(categoryController.deleteCategory); //admin
 
 module.exports = categoryRoute;  

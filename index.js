@@ -4,6 +4,9 @@ const userRouter = require('./routes/userRoutes');
 const courseRouter = require('./routes/courseRoutes');
 const reviewRouter = require("./routes/reviewRoutes");
 const categoryRouter = require('./routes/categoryRoutes');
+const cartRouter = require('./routes/cartRoutes');
+const wishListRouter = require('./routes/wishListRoutes');
+const enrolledRouter = require('./routes/enrolledRoutes');
 const buyingRouter = require("./routes/buyingRoutes");
 const mongoose = require('mongoose');
 
@@ -17,6 +20,9 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/courses", courseRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/carts", cartRouter);
+app.use("/api/v1/wishLists", wishListRouter);
+app.use("/api/v1/enrolled", enrolledRouter);
 app.use("/api/v1/buyings", buyingRouter);
 
 

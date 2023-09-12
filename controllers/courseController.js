@@ -32,39 +32,39 @@ const upload = multer({
 
 exports.uploadCoursePhoto = upload.single("photo");
 
-exports.getAllCourse = async (req, res) => {
-  try {
-    const page = req.query.p || 1;
-    const numOfCourses = 3;
-    const count = await Course.countDocuments({})
-    const maxPage = Math.ceil(count / numOfCourses);
+// exports.getAllCourse = async (req, res) => {
+//   try {
+//     const page = req.query.p || 1;
+//     const numOfCourses = 3;
+//     const count = await Course.countDocuments({})
+//     const maxPage = Math.ceil(count / numOfCourses);
 
-    if (page > maxPage) {
-      return res.status(400).json({
-        status: "Faild",
-        message: "Invalid page number",
-      });
-    }
-    //filteration
-    const queryObj = { ...req.query };
-    delete queryObj.p;
-    const courses = await Course.find(queryObj)
-      .skip((page - 1) * numOfCourses) //pagination
-      .limit(numOfCourses);
-    res.status(200).json({
-      status: "Success",
-      results: courses.length,
-      data: {
-        courses,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "Faild",
-      message: err,
-    });
-  }
-};
+//     if (page > maxPage) {
+//       return res.status(400).json({
+//         status: "Faild",
+//         message: "Invalid page number",
+//       });
+//     }
+//     //filteration
+//     const queryObj = { ...req.query };
+//     delete queryObj.p;
+//     const courses = await Course.find(queryObj)
+//       .skip((page - 1) * numOfCourses) //pagination
+//       .limit(numOfCourses);
+//     res.status(200).json({
+//       status: "Success",
+//       results: courses.length,
+//       data: {
+//         courses,
+//       },
+//     });
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
+//     });
+//   }
+// };
 
 exports.updateCourse = async (req, res) => {
   try {
@@ -108,6 +108,7 @@ exports.updateCourse = async (req, res) => {
   }
 };
 
+exports.getAllCourse = factory.getAll(Course);
 exports.getCourse = factory.getOne(Course);
 exports.createCourse = factory.createOne(Course);
 exports.deleteCourse = factory.deleteOne(Course);

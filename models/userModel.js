@@ -45,8 +45,10 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  //enrolledCourses: { type: mongoose.SchemaTypes.ObjectId, ref: "Course" },
+  enrolledCourses: { type: mongoose.Schema.ObjectId, ref: "Course" },
 });
+
+
 
 userSchema.pre("save", async function (next) {
   //Encrypt password if password field is updated
@@ -58,6 +60,10 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+userSchema.pre(/^find/, function (next) {
+  this.populate({ path: "enrolledCourses" });
+  next();
+});
 
 //This function will be run before a new document is actually saved
 /*
