@@ -16,7 +16,7 @@ const categorySchema = mongoose.Schema({
   courses: {
     type: mongoose.Schema.ObjectId,
     ref: 'Course',
-  },
+  }, 
   createdAt: {
     type: Date,
     default: Date.now(),

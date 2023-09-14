@@ -3,7 +3,7 @@ const factory = require('./handlerFactory');
 
 exports.createCategory = async (req, res) => {
   try {
-    const newCategory = await Category.create({...req.body, courses: req.course.id});
+    const newCategory = await Category.create(req.body);
     res.status(200).json({
       status: "Success",
       data: { newCategory },

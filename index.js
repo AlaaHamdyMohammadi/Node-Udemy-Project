@@ -10,19 +10,10 @@ const wishListRouter = require('./routes/wishListRoutes');
 const enrolledRouter = require('./routes/enrolledRoutes');
 const buyingRouter = require("./routes/buyingRoutes");
 const mongoose = require('mongoose');
-
-
-app.use(
-  cors({
-    //any domain
-    origin: "*",
-    methods: "GET POST PATCH DELETE",
-  })
-);
-
+ 
 //MIDDLEWARE to modify incoming request data :
 app.use(express.json());
-
+app.use(cors());
 
 //ROUTES:
 app.use("/api/v1/users", userRouter);

@@ -10,7 +10,7 @@ userRouter.post("/forgetPassword", authController.forgetPassword);
 //userRouter.patch("/resetPassword/:token", authController.resetPassword); 
 
 userRouter.use(authController.protect); //It will protect all routes after this middleware
-
+ 
 userRouter.get('/me', userController.getMe, userController.getUser)
 
 userRouter.use(authController.restrictTo("admin"));
