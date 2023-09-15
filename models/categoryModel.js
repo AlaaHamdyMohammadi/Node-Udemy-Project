@@ -13,20 +13,20 @@ const categorySchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  courses: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Course',
-  }, 
+  // courses: {
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: 'Course',
+  // }, 
   createdAt: {
     type: Date,
     default: Date.now(),
   },
 });
 
-categorySchema.pre(/^find/, function(next){
-  this.populate({path: 'courses', select: '-__v'});
-  next();
-})
+// categorySchema.pre(/^find/, function(next){
+//   this.populate({path: 'courses', select: '-__v'});
+//   next();
+// })
 
 const Category = mongoose.model('Category', categorySchema);
 module.exports = Category;

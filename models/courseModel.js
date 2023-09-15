@@ -9,16 +9,16 @@ const courseSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   rating: { type: Number, required: true },
   duration: { type: Number, required: true },
-  // users: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'User',
-  // }
+  category: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Category',
+  }
 });
 
-// courseSchema.pre(/^find/, function(next){
-//   this.populate({ path: "users", select: '-__v' });
-//   next();
-// })
+courseSchema.pre(/^find/, function(next){
+  this.populate({ path: "category", select: "-__v" });
+  next();
+})
 
 const Course = mongoose.model("Course", courseSchema);
 
