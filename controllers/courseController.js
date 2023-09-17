@@ -66,6 +66,33 @@ exports.uploadCoursePhoto = upload.single("photo");
 //   }
 // };
 
+
+// exports.createCourse = async (req, res) => {
+//   try {
+//     if(req.file){
+//       let photo = req.file.path;
+//       //const {photo, title, description, price, rating, duration} = req.body
+//       const newCourse = await Course.create({...req.body, photo});
+//       return res.status(200).json({
+//         status: "Success",
+//         data: {
+//           newCourse,
+//         },
+//       });
+//     }
+//     const newCourse = await Course.create(req.body);
+//     res.status(201).json({
+//       status: "Success",
+//       data: newCourse,
+//     });
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
+//     });
+//   }
+// };
+
 exports.updateCourse = async (req, res) => {
   try {
     const { id } = req.params;

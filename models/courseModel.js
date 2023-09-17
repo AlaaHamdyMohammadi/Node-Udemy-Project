@@ -5,18 +5,22 @@ const courseSchema = new mongoose.Schema({
   description: { type: String, required: true },
   photo: {
     type: String,
-  }, 
+  },
+  // video: {
+  //   type: String, 
+  //   required: true,
+  // }, 
   price: { type: Number, required: true },
   rating: { type: Number, required: true },
   duration: { type: Number, required: true },
-  category: {
+  subCategory: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Category',
+    ref: 'SubCategories',
   }
 });
 
 courseSchema.pre(/^find/, function(next){
-  this.populate({ path: "category", select: "-__v" });
+  this.populate({ path: "subCategory", select: "name" });
   next();
 })
 

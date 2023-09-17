@@ -74,22 +74,22 @@ const multerStorage = multer.diskStorage({
 //Course Collection
 /*
 
-// exports.createCourse = async (req, res) => {
-//   try {
-//     // console.log(req.body);
-//     // req.body.userId = userId;
-//     const newCourse = await Course.create(req.body);
-//     res.status(201).json({
-//       status: "Success",
-//       data: newCourse,
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       status: "Faild",
-//       message: err,
-//     });
-//   }
-// };
+exports.createCourse = async (req, res) => {
+  try {
+    // console.log(req.body);
+    // req.body.userId = userId;
+    const newCourse = await Course.create(req.body);
+    res.status(201).json({
+      status: "Success",
+      data: newCourse,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "Faild",
+      message: err,
+    });
+  }
+};
 
 // exports.getCourse = async (req, res) => {
 //   try {
@@ -157,7 +157,7 @@ const multerStorage = multer.diskStorage({
 //       status: "Success",
 //       results: categories.length,
 //       data: { categories },
-//     });
+//     }); 
 //   } catch (err) {
 //     res.status(404).json({
 //       status: "Faild",
