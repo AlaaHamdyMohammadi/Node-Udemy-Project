@@ -134,7 +134,7 @@ exports.updateCourse = async (req, res) => {
     });
   }
 };
-
+//console.log
 exports.getAllCourse = factory.getAll(Course);
 exports.getCourse = factory.getOne(Course);
 exports.createCourse = factory.createOne(Course);
