@@ -29,7 +29,7 @@ const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
 });
-
+ 
 exports.uploadCoursePhoto = upload.single("photo");
 
 exports.getAllCourse = async(req, res) => {
