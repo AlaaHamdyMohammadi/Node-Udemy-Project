@@ -13,7 +13,7 @@ exports.getCheckoutSession = async(req, res, next) => {
         //Information about session
         payment_method_types: ["card"],
         success_url: `${req.protocol}://${req.get("host")}/`,
-        //success_url: `http://localhost:5173/test`, //checkout-success
+        success_url: `http://localhost:5173`, //checkout-success
         // cancel_url: `${}`
         customer_email: req.user.email,
         client_reference_id: req.params.courseID,
@@ -25,14 +25,14 @@ exports.getCheckoutSession = async(req, res, next) => {
               product_data: {
                 name: `${course.title} Course`,
                 description: course.description,
-                //images: course.photo,
+                //images: [course.photo]
               },
               unit_amount: course.price * 100, // Amount in cents
             },
             quantity: 1,
           },
         ],
-        mode: "payment",
+        mode: "payment", 
       });
       //console.log(session);
 
@@ -48,3 +48,5 @@ exports.getCheckoutSession = async(req, res, next) => {
         });
     }
 };
+
+//4242 4242 4242 4242 

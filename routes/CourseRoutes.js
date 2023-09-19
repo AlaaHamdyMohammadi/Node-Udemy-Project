@@ -2,10 +2,10 @@ const express = require("express");
 const courseController = require("./../controllers/courseController");
 const authController = require("./../controllers/authController");
 
-const courseRouter = express.Router();
+const courseRouter = express.Router({ mergeParams: true });
  
 courseRouter
-  .route("/")
+  .route("/") 
   .get(courseController.getAllCourse)
   .post(
     authController.protect,

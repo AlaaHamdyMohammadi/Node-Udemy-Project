@@ -31,7 +31,7 @@ exports.getAllsubCategories = async (req, res) => {
     let filterObj = {};
     if(req.params.categoryId) filterObj = { category: req.params.categoryId };
     const subCategories = await SubCategory.find(filterObj);
-    res.status(200).json({
+    res.status(200).json({ 
       status: "Success",
       results: subCategories.length,
       data: { subCategories },

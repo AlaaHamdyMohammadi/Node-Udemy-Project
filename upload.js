@@ -8,9 +8,9 @@ const upload = multer({ dest: "./public/videos" }); // Configure the destination
 const app = express();
 
 cloudinary.config({
-  cloud_name: "dojogaspp",
-  api_key: "523792644755346",
-  api_secret: "***************************",
+  cloud_name: "dfblc4yij",
+  api_key: "544755784575998",
+  api_secret: "AdIWJbMLLzhVWzj4RzxW8VQlTlQ",
 });
 
 
