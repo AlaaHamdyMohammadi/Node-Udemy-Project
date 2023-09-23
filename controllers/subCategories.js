@@ -44,36 +44,7 @@ exports.getAllsubCategories = async (req, res) => {
   }
 };
 
-// exports.getSubCategoriesGroupedByCategory = async (req, res, next) => {
-//   try {
-//     const groupedSubcategories = await SubCategory.aggregate([
-//       {
-//         $group: {
-//           _id: "$category",
-//           subcategories: { $push: "$$ROOT" },
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "categories", // Assuming your category model is named "Category"
-//           localField: "_id",
-//           foreignField: "_id",
-//           as: "category",
-//         },
-//       },
-//       {
-//         $unwind: "$category",
-//       },
-//     ]);
 
-//     res.status(200).json({
-//       status: "success",
-//       data: groupedSubcategories,
-//     });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 //exports.getAllsubCategories = factory.getAll(SubCategory);
 exports.getsubCategories = factory.getOne(SubCategory);

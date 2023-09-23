@@ -38,10 +38,62 @@ exports.resizeUserPhoto = (req, res, next) => {
   next();  
 };
 
+const filterObj = (object, ...allowedFields) => {
+  const newObj = {};
+  Object.keys(object).forEach(e => {
+    if(allowedFields.includes(e)){
+      newObj[e] = object[e];
+    }
+  });
+  return newObj;
+}
+
 exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
   next();
 };
+
+exports.updateMe = async(req, res, next) => {
+  console.log(req.file);
+  console.log(req.body);
+
+  //Error if user post password data
+  if(req.body.password || req.body.passwordConfirm){
+    return next('this route is not for password updates')
+  }
+
+  //Update user documents
+  const filteredBody = filterObj(req.body, 'username', 'email');
+  if(req.file) filteredBody.photo = req.file.filename;
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(201).json({
+    status: "Success",
+    data: updatedUser,
+  });
+}
+
+// exports.getAllUsers = async (req, res) => {
+//   try {
+//     let filterObj = {};
+//     const users = await User.find();
+//     res.status(200).json({
+//       status: "Success",
+//       results: users.length,
+//       data: {
+//         users,
+//       },
+//     });
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
+//     });
+//   }
+// };
 
 exports.createUser = async (req, res) => {
   // console.log(req.file);

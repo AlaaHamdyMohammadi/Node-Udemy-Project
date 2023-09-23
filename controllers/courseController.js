@@ -1,6 +1,6 @@
 const Course = require("./../models/courseModel");
 const multer = require("multer");
-const factory = require('./handlerFactory');
+const factory = require("./handlerFactory");
 
 const multerStorage = multer.diskStorage({
   // destination is a callback function
@@ -11,8 +11,8 @@ const multerStorage = multer.diskStorage({
   filename: (req, file, cb) => {
     //const content = req.user.id;
     const extention = file.mimetype.split("/")[1];
+    console.log(file.mimetype);
     cb(null, `user-${req.params.id}-${Date.now()}.${extention}`);
-    //cb(null, `user-${file.originalname}-${Date.now()}.${extention}`);
   },
 });
 
@@ -29,26 +29,53 @@ const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
 });
- 
+
 exports.uploadCoursePhoto = upload.single("photo");
 
-exports.getAllCourse = async(req, res) => {
-  try{
+exports.getAllCourse = async (req, res) => {
+  try {
     let filterObj = {};
-    if(req.params.subCategoryId) filterObj = { subCategory: req.params.subCategoryId };
+    if (req.params.subCategoryId) {
+      filterObj = {
+        subCategory: req.params.subCategoryId,
+      };
+    }else if(req.params.instructorId){
+      filterObj = {
+        instructorId: req.params.instructorId,
+      };
+    }
     const courses = await Course.find(filterObj);
     res.status(200).json({
       status: "Success",
       results: courses.length,
       data: { courses },
     });
-  }catch(err){
+  } catch (err) {
     res.status(404).json({
       status: "Faild",
       message: err,
     });
   }
-}
+};
+
+exports.getCourse = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    res.status(200).json({
+      status: "Success",
+      data: {
+        course,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "Faild",
+      message: err,
+    });
+  }
+
+  // console.log(req.body);
+};
 
 exports.updateCourse = async (req, res) => {
   try {
@@ -71,7 +98,6 @@ exports.updateCourse = async (req, res) => {
           course,
         },
       });
-      
     }
 
     const course = await Course.findByIdAndUpdate(id, req.body, {
@@ -91,8 +117,42 @@ exports.updateCourse = async (req, res) => {
     });
   }
 };
-//console.log
+
+exports.createCourse = async (req, res) => {
+  try {
+    const newCourse = await Course.create({
+      ...req.body,
+      instructorId: req.id,
+    });
+    res.status(201).json({
+      status: "Success",
+      data: newCourse,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "Faild",
+      message: err,
+    });
+  }
+};
+
+exports.deleteCourse = async (req, res) => {
+  try {
+    //Not send back any data to the client
+    await Course.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+      status: "Success",
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "Faild",
+      message: err,
+    });
+  }
+};
+
 //exports.getAllCourse = factory.getAll(Course);
-exports.getCourse = factory.getOne(Course);
-exports.createCourse = factory.createOne(Course);
-exports.deleteCourse = factory.deleteOne(Course);
+//exports.getCourse = factory.getOne(Course);
+//exports.createCourse = factory.createOne(Course);
+//exports.deleteCourse = factory.deleteOne(Course);

@@ -12,6 +12,14 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validator: [validator.isEmail, "Please write a valid email"],
   },
+  // Profits: {
+  //   type: String,
+  // },
+  // courseInstructor: {
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: "Course",
+  //   required: [true, "Must"],
+  // },
   photo: {
     type: String,
     default: "default.jpg",
@@ -65,6 +73,11 @@ userSchema.pre(/^find/, function (next) {
   next();
 });
 
+// reviewSchema.pre(/^find/, function (next) {
+//   this.populate({ path: "courseInstructor", select: "title" });
+//   next();
+// });
+ 
 //This function will be run before a new document is actually saved
 /*
 userSchema.pre('save', function(next){
