@@ -9,9 +9,14 @@ const subCategoryRouter = require("./routes/subCategoriesRoutes");
 const cartRouter = require('./routes/cartRoutes');
 const wishListRouter = require('./routes/wishListRoutes');
 const enrolledRouter = require('./routes/enrolledRoutes');
+const videoRouter = require('./routes/videoRoutes');
 const buyingRouter = require("./routes/buyingRoutes");
 const mongoose = require('mongoose');
- 
+
+const path = require("path");
+const publicPath = path.join(__dirname, "public");
+app.use(express.static(publicPath));
+
 //MIDDLEWARE to modify incoming request data :
 app.use(express.json());
 app.use(cors());
@@ -25,6 +30,7 @@ app.use("/api/v1/subCategories", subCategoryRouter);
 app.use("/api/v1/carts", cartRouter);
 app.use("/api/v1/wishLists", wishListRouter);
 app.use("/api/v1/enrolled", enrolledRouter);
+app.use("/api/v1/videos", videoRouter);
 app.use("/api/v1/buyings", buyingRouter);
 
 

@@ -16,8 +16,8 @@ courseRouter
   )
   .post(
     authController.protect,
-    authController.restrictTo("instructor", "admin"),
-    //courseController.uploadCoursePhoto,
+    // authController.restrictTo("instructor", "admin"),
+    courseController.uploadCoursePhoto,
     courseController.createCourse
   );   
 courseRouter

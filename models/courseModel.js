@@ -26,7 +26,6 @@ const courseSchema = new mongoose.Schema({
   sections: { type: Number },
   ContentSection: { type: Array },
   NumStd: { type: Number, required: true },
-  //relation
   instructor: { type: String, required: true },
   learn: { type: Array, required: true },
   requirements: { type: Array, required: true },

@@ -12,10 +12,10 @@ const multerStorage = multer.diskStorage({
     //const content = req.user.id;
     const extention = file.mimetype.split("/")[1];
     console.log(file.mimetype);
-    cb(null, `user-${req.params.id}-${Date.now()}.${extention}`);
+    cb(null, `course-${req.params.id}-${Date.now()}.${extention}`);
   },
 });
-
+//-${req.params.id}
 const multerFilter = (req, file, cb) => {
   //mimetype always contain image word to check
   if (file.mimetype.startsWith("image")) {
@@ -82,7 +82,7 @@ exports.updateCourse = async (req, res) => {
     const { id } = req.params;
 
     if (req.file) {
-      const photo = req.file.path;
+      const photo = req.file.filename;
       console.log(req.file);
       const course = await Course.findByIdAndUpdate(
         id,
@@ -119,11 +119,22 @@ exports.updateCourse = async (req, res) => {
 };
 
 exports.createCourse = async (req, res) => {
+  console.log(req)
   try {
+    // if (!req.file) {
+    //   return res.status(400).json({
+    //     status: "Failed",
+    //     message: "No file uploaded. Please upload a file.",
+    //   });
+    // }
+    
+    const photo = req.file.filename;
     const newCourse = await Course.create({
       ...req.body,
       instructorId: req.id,
+      photo,
     });
+    //console.log(photoPath)
     res.status(201).json({
       status: "Success",
       data: newCourse,
@@ -131,7 +142,7 @@ exports.createCourse = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: "Faild",
-      message: err,
+      message: err.message,
     });
   }
 };
