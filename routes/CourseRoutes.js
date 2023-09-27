@@ -23,7 +23,11 @@ courseRouter
 courseRouter
   .route("/:id")
   .get(courseController.getCourse)
-  .patch(courseController.uploadCoursePhoto, courseController.updateCourse) //authController.protect, authController.restrictTo("instructor", "admin"),
+  .patch(
+    courseController.uploadCoursePhoto,
+    courseController.resizeCoursePhoto,
+    courseController.updateCourse
+  ) //authController.protect, authController.restrictTo("instructor", "admin"),
   .delete(
     authController.protect,
     authController.restrictTo("instructor", "admin"), //passed role that allawed to interact with this resource (return middleware)

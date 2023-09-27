@@ -38,6 +38,10 @@ const courseSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "SubCategories",
   },
+  categoryId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Category",
+  }
 });
 
 courseSchema.pre(/^find/, function (next) {
@@ -49,6 +53,10 @@ courseSchema.pre(/^find/, function (next) {
   this.populate({ path: "subCategory", select: "name" });
   next();
 });
+courseSchema.pre(/^find/, function (next) {
+  this.populate({ path: "categoryId", select: "name" });
+  next();
+}); 
 
 const Course = mongoose.model("Course", courseSchema);
 

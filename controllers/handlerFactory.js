@@ -83,6 +83,7 @@ exports.getAll = (Model) => async (req, res, next) => {
       const excludedFields = ["page", "sort", "limit", "fields"];
       excludedFields.forEach((e) => delete queryObj[e]);
 
+      // console.log(req.query, queryObj );
       //2-Filtering Mongo (convert obj to str to make functions on it)
         //{rating: {gte: "3"}} => {rating: {$gte: 3}} (gte, gt, lte, lt)
  
@@ -92,7 +93,7 @@ exports.getAll = (Model) => async (req, res, next) => {
       console.log(JSON.parse(queryStr));
       console.log(req.query, queryObj);
 
-      // const query = Model.find(req.query);
+      // const query = Model.find(queryObj);
       let query = Model.find(JSON.parse(queryStr)); //Return query so I can chain other methods
 
       // 2- Sorting
@@ -127,7 +128,7 @@ exports.getAll = (Model) => async (req, res, next) => {
       res.status(201).json({
         status: "Success",
         results: documents.length,
-        data: { documents },
+        data: {documents} ,
       });
     } catch (err) {
       res.status(404).json({

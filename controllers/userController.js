@@ -4,18 +4,21 @@ const User = require("./../models/userModel");
 const factory = require('./handlerFactory');
 
 //In image processing after uploading the file, the best to save it in memory(the image will then stored as a buffer)
-//const multerStorage = multer.memoryStorage();
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) =>{
-    cb(null, "public/img/users");
-  },
-  filename: (req, file, cb) =>{
-    const extention = file.mimetype.split('/')[1];
-    cb(null, `user-${req.user.id}-${Date.now()}.${extention}`)
-  }
-});
+
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) =>{
+//     cb(null, "public/img/users");
+//   },
+//   filename: (req, file, cb) =>{
+//     const extention = file.mimetype.split('/')[1];
+//     cb(null, `user-${req.user.id}-${Date.now()}.${extention}`)
+//   }
+// });
 
 //This function to test if the uploaded file is an image or not
+
+const multerStorage = multer.memoryStorage();
+
 const multerFilter = (req, file, cb) => {
   //mimetype always contain image word to check
   if (file.mimetype.startsWith("image")) {
@@ -26,11 +29,6 @@ const multerFilter = (req, file, cb) => {
 };
 
 //Images are not directly uploaded into the db, just upload them into file system, and then in db we put a link to that image.
-// const upload = multer({
-//   storage: multerStorage,
-//   fileFilter: multerFilter,
-// });
-
 const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
@@ -38,19 +36,18 @@ const upload = multer({
 
 exports.uploadUserPhoto = upload.single("photo");
 
-// exports.resizeUserPhoto = (req, res, next) => {
-//   if (!req.file) return next();
+exports.resizeUserPhoto = (req, res, next) => {
+  if (!req.file) return next();
 
-//   req.file.filename = `user-${req.params.id}-${Date.now()}.jpeg`;
-
-//   sharp(req.file.buffer)
-//     .resize(500, 500)
-//     .toFormat("jpeg")
-//     .jpeg({ quality: 90 })
-//     .toFile(`public/img/users/${req.file.filename}`);
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+  sharp(req.file.buffer)
+    .resize(500, 300)
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/users/${req.file.filename}`);
   
-//   next();  
-// };
+  next();  
+};
 
 const filterObj = (object, ...allowedFields) => {
   const newObj = {};
