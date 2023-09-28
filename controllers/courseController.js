@@ -40,7 +40,7 @@ exports.resizeCoursePhoto = (req, res, next) => {
 
   req.file.filename = `course-${req.params.id}-${Date.now()}.jpeg`;
   sharp(req.file.buffer)
-    .resize(500, 500)
+    .resize(700, 300)
     .toFormat("jpeg")
     .jpeg({ quality: 90 })
     .toFile(`public/img/courses/${req.file.filename}`);

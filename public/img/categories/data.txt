@@ -1,0 +1,141 @@
+Alaa:
+
+1-Data Science
+2-Database design
+3-Web Development
+4-Game Development
+5-Programming Languare
+
+
+
+Esraa:
+1-Software Testing
+2-SoftwareEngineering
+3-No-Code
+4-SoftwareDevelopmentTools
+5-MobileDevelopment
+------------------------------------------
+{
+    "title": "Data Science in Python: Reression & Forecasting",
+    "subTitle":"Learn Python for Data Science & Machine Learning, and build regression and forecasting models with hands-on projects",
+    "price":"179.99",
+    "rating":"4.8",
+    "NumRating":"34",
+    "duration":"8.5",
+    "lectures":"152",
+    "NumStd":"890",
+    "instructor":"Maven Analytics",
+    "learn": [
+                    {
+                        "id": "1",
+                        "state": "Master the machine learning foundations for regression analysis in Python"
+                    },
+                    {
+                        "id": "2",
+                        "state": "Build and interpret simple and multiple linear regression models with Statsmodels and Scikit-Learn"
+                    },
+                    {
+                        "id": "3",
+                        "state": "Diagnose and fix violations to the assumptions of linear regression models"
+                    },
+                    {
+                        "id": "4",
+                        "state": "Leverage regularized regression algorithms to improve test model performance & accuracy"
+                    },
+                    {
+                        "id": "5",
+                        "state": "Perform exploratory data analysis on model features, the target, and relationships between them"
+                    },
+                    {
+                        "id": "6",
+                        "state": "Evaluate model performance using tools like hypothesis tests, residual plots, and mean error metrics"
+                    },
+                    {
+                        "id": "7",
+                        "state": "Tune and test your models with data splitting, validation and cross validation, and model scoring"
+                    },
+                    {
+                        "id":"8",
+                        "state": "Employ time series analysis techniques to identify trends & seasonality, perform decomposition, and forecast future values"
+                    }
+                ],
+    "requirements": [
+                    {
+                        "id": "1",
+                        "state": "We strongly recommend taking our Data Prep & EDA course first"
+                    },
+                    {
+                        "id": "2",
+                        "state": "Jupyter Notebooks (free download, we'll walk through the install)"
+                    },
+                    {
+                        "id": "3",
+                        "state": "Familiarity with base Python and Pandas is recommended, but not required"
+                    }
+                ],
+    "description": "This is a hands-on, project-based course designed to help you master the foundations for regression analysis in Python.We’ll start by reviewing the data science workflow, discussing the primary goals & types of regression analysis, and do a deep dive into the regression modeling steps we’ll be using throughout the course.You’ll learn to perform exploratory data analysis, fit simple & multiple linear regression models, and build an intuition for interpreting models and evaluating their performance using tools like hypothesis tests, residual plots, and error metrics. We’ll also review the assumptions of linear regression, and learn how to diagnose and fix each one.From there, we’ll cover the model testing & validation steps that help ensure our models perform well on new, unseen data, including the concepts of data splitting, tuning, and model selection. You’ll also learn how to improve model performance by leveraging feature engineering techniques and regularized regression algorithms.Throughout the course, you'll play the role of Associate Data Scientist for Maven Consulting Group on a team that focuses on pricing strategy for their clients. Using the skills you learn throughout the course, you'll use Python to explore their data and build regression models to help firms accurately predict prices and understand the variables that impact them.Last but not least, you'll get an introduction to time series analysis & forecasting techniques. You’ll learn to analyze trends & seasonality, perform decomposition, and forecast future values.", 
+    "updated": "9/2023", 
+    "DiscountPrice": 269.99,
+    "percentageDis": 33,
+    "timeDis": 1,
+    "articles": 3,
+    "exercises": 7,
+    "resources": 2,
+    "sections": 15, 
+    "ContentSection": [
+                    {
+                        "header": "Getting Started",
+                        "time": 13,
+                        "lecturesNum": 8,
+                        "content": ""
+                    },
+                    {
+                        "header": "Intro to Data Science",
+                        "time": 21,
+                        "lecturesNum": 13,
+                        "content": ""
+                    },
+                    {
+                        "header": "Regression 101",
+                        "time": 14,
+                        "lecturesNum": 5,
+                        "content": ""
+                    },
+                    {
+                        "header": "Pre-Modelling Data Prep & EDA",
+                        "time": 56,
+                        "lecturesNum": 14,
+                        "content": ""
+                    },
+                    {
+                        "header": "Creating content with jsx",
+                        "time": 85,
+                        "lecturesNum": 12,
+                        "content": ""
+                    },
+                    {
+                        "header": "Simple Linear Regression",
+                        "time": 53,
+                        "lecturesNum": 16,
+                        "content": ""
+                    },
+                    {
+                        "header": "Multiple Linear Regression",
+                        "time": 38,
+                        "lecturesNum": 12,
+                        "content": ""
+                    },
+                    {
+                        "header": "Feature Engineering",
+                        "time": 58,
+                        "lecturesNum": 14,
+                        "content": ""
+                    }
+                ],
+    "BestSeller": "BestSeller",
+    "subCategory":"6508c19d4e4c2aafd775629c",
+    "categoryId": "6508c17f4e4c2aafd775629a"
+    
+}
+
+filteration in sidebar(Mona)
