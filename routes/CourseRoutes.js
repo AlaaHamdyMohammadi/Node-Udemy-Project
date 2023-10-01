@@ -10,14 +10,15 @@ courseRouter.use("/:courseId/reviews", reviewRoutes);
 courseRouter
   .route("/")
   .get(
-    //authController.protect,
-    //authController.restrictTo("instructor", "admin"),
+    authController.protect,
+    authController.restrictTo("instructor", "admin"),
     courseController.getAllCourse
   )
   .post(
     authController.protect,
-    // authController.restrictTo("instructor", "admin"),
+    authController.restrictTo("instructor", "admin"),
     courseController.uploadCoursePhoto,
+    courseController.resizeCoursePhoto,
     courseController.createCourse
   );   
 courseRouter

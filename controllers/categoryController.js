@@ -11,7 +11,7 @@ const multerStorage = multer.diskStorage({
   filename: (req, file, cb) => {
     const extention = file.mimetype.split("/")[1];
     console.log(file.mimetype);
-    cb(null, `category-${req.params.id}-${Date.now()}.${extention}`);
+    cb(null, `category-${req.id}-${Date.now()}.${extention}`);
   },
 });
 
@@ -33,6 +33,7 @@ exports.uploadCategoryPhoto = upload.single("photo");
 
 exports.createCategory = async (req, res) => {
   try {
+    // const photo = req.file.filename; {...req.body, photo}
     const newCategory = await Category.create(req.body);
     res.status(200).json({
       status: "Success",

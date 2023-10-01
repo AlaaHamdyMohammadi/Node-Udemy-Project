@@ -10,8 +10,17 @@ categoryRoute.use("/:categoryId/courses", coursesRoutes);
 
 categoryRoute
   .route("/")
-  .get(categoryController.getAllCategories) //protect? 
-  .post(categoryController.createCategory); //admin
+  .get(
+    // authController.protect,
+    // authController.restrictTo("instructor", "admin"),
+    categoryController.getAllCategories
+  ) //protect?
+  .post(
+    authController.protect,
+    authController.restrictTo("instructor", "admin"),
+    // categoryController.uploadCategoryPhoto,
+    categoryController.createCategory
+  ); //admin
  
   
 categoryRoute
@@ -21,6 +30,10 @@ categoryRoute
     categoryController.uploadCategoryPhoto,
     categoryController.updateCategory
   ) //admin
-  .delete(categoryController.deleteCategory); //admin
+  .delete(
+    authController.protect,
+    authController.restrictTo("instructor", "admin"),
+    categoryController.deleteCategory
+  ); //admin 
 
 module.exports = categoryRoute;  

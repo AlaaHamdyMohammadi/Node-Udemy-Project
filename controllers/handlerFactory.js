@@ -109,7 +109,7 @@ exports.getAll = (Model) => async (req, res, next) => {
       
       //*1 => convert str to num, || 1 => page number1
       const page = req.query.page * 1 || 1;
-      const limit = req.query.limit * 1 || 20;
+      const limit = req.query.limit * 1 || 10;
       const skip = (page - 1) * limit;
       
       query = query.skip(skip).limit(limit);

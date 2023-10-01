@@ -9,9 +9,12 @@ const courseSchema = new mongoose.Schema({
   },
   // video: {
   //   type: String,
-  //   required: true,
+  //   required: true, Beginners, All levels, Intermediate, Expert
   // },
   price: { type: Number, required: true },
+  priceType: { type: String, required: true },
+  BestSeller: { type: String },
+  Level: { type: String, required: true },
   DiscountPrice: { type: Number },
   percentageDis: { type: Number },
   timeDis: { type: Number },
@@ -33,6 +36,10 @@ const courseSchema = new mongoose.Schema({
     type: String,
     // required: true
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
   instructorId: { type: mongoose.Schema.ObjectId, ref: "User" },
   subCategory: {
     type: mongoose.Schema.ObjectId,
@@ -41,7 +48,7 @@ const courseSchema = new mongoose.Schema({
   categoryId: {
     type: mongoose.Schema.ObjectId,
     ref: "Category",
-  }
+  },
 });
 
 courseSchema.pre(/^find/, function (next) {

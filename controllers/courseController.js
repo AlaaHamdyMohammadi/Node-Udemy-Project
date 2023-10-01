@@ -34,11 +34,11 @@ const upload = multer({
 });
 
 exports.uploadCoursePhoto = upload.single("photo");
-
+//-${req.params.id}
 exports.resizeCoursePhoto = (req, res, next) => {
   if (!req.file) return next();
 
-  req.file.filename = `course-${req.params.id}-${Date.now()}.jpeg`;
+  req.file.filename = `course-${Date.now()}.jpeg`;
   sharp(req.file.buffer)
     .resize(700, 300)
     .toFormat("jpeg")
@@ -48,94 +48,94 @@ exports.resizeCoursePhoto = (req, res, next) => {
   next();
 };
 
-exports.getAllCourse = async (req, res) => {
-  try {
-    let filterObj = {};
-    if (req.params.subCategoryId) {
-      filterObj = {
-        subCategory: req.params.subCategoryId,
-      };
-    }else if(req.params.instructorId){
-      filterObj = {
-        instructorId: req.params.instructorId,
-      };
-    }else if(req.params.categoryId){
-      filterObj = {
-        categoryId: req.params.categoryId,
-      };
-    }
-    const courses = await Course.find(filterObj);
-    res.status(200).json({
-      status: "Success",
-      results: courses.length,
-      data: { courses },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "Faild",
-      message: err,
-    });
-  }
-};
-
 // exports.getAllCourse = async (req, res) => {
 //   try {
-//     // Combine URL parameters and query parameters into a single filter object
-//     const filterObj = { ...req.query };
-
+//     let filterObj = {};
 //     if (req.params.subCategoryId) {
-//       filterObj.subCategory = req.params.subCategoryId;
+//       filterObj = {
+//         subCategory: req.params.subCategoryId,
+//       };
+//     }else if(req.params.instructorId){
+//       filterObj = {
+//         instructorId: req.params.instructorId,
+//       };
+//     }else if(req.params.categoryId){
+//       filterObj = {
+//         categoryId: req.params.categoryId,
+//       };
 //     }
-
-//     if (req.params.instructorId) {
-//       filterObj.instructorId = req.params.instructorId;
-//     }
-
-//     if (req.params.categoryId) {
-//       filterObj.categoryId = req.params.categoryId;
-//     }
-
-//     // Rest of the code for filtering, sorting, pagination, and limiting
-//     const excludedFields = ["page", "sort", "limit", "fields"];
-//     excludedFields.forEach((e) => delete filterObj[e]);
- 
-//     console.log("first",filterObj);
-
-//     let queryStr = JSON.stringify(filterObj);
-//     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-
-//     console.log("second",filterObj);
-
-
-//     let sort = "-createdAt";
-//     if (req.query.sort) {
-//       sort = req.query.sort;
-//     }
-
-//     const page = req.query.page * 1 || 1;
-//     const limit = req.query.limit * 1 || 20;
-//     const skip = (page - 1) * limit;
-
-//     const courses = await Course.find(JSON.parse(queryStr))
-//       .sort(sort)
-//       .skip(skip)
-//       .limit(limit);
-
-//     const totalCourses = await Course.countDocuments(JSON.parse(queryStr));
-
+//     const courses = await Course.find(filterObj);
 //     res.status(200).json({
 //       status: "Success",
 //       results: courses.length,
-//       totalCourses,
 //       data: { courses },
 //     });
 //   } catch (err) {
-//     res.status(500).json({
-//       status: "Failed",
-//       message: err.message,
+//     res.status(404).json({
+//       status: "Faild",
+//       message: err,
 //     });
 //   }
 // };
+
+exports.getAllCourse = async (req, res) => {
+  try {
+    // Combine URL parameters and query parameters into a single filter object
+    const filterObj = { ...req.query };
+
+    if (req.params.subCategoryId) {
+      filterObj.subCategory = req.params.subCategoryId;
+    }
+
+    if (req.params.instructorId) {
+      filterObj.instructorId = req.params.instructorId;
+    }
+
+    if (req.params.categoryId) {
+      filterObj.categoryId = req.params.categoryId;
+    }
+
+    // Rest of the code for filtering, sorting, pagination, and limiting
+    const excludedFields = ["page", "sort", "limit", "fields"];
+    excludedFields.forEach((e) => delete filterObj[e]);
+ 
+    console.log("first",filterObj);
+
+    let queryStr = JSON.stringify(filterObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+
+    console.log("second",filterObj);
+
+
+    let sort = "-createdAt";
+    if (req.query.sort) {
+      sort = req.query.sort;
+    }
+
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 10;
+    const skip = (page - 1) * limit;
+
+    const courses = await Course.find(JSON.parse(queryStr))
+      .sort(sort)
+      .skip(skip)
+      .limit(limit);
+
+    const totalCourses = await Course.countDocuments(JSON.parse(queryStr));
+
+    res.status(200).json({
+      status: "Success",
+      results: courses.length,
+      totalCourses,
+      data: { courses },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "Failed",
+      message: err.message,
+    });
+  }
+};
 
 
 
@@ -213,7 +213,7 @@ exports.createCourse = async (req, res) => {
     const newCourse = await Course.create({
       ...req.body,
       instructorId: req.id,
-      // photo,
+      //photo,
     });
     //console.log(photoPath)
     res.status(201).json({
