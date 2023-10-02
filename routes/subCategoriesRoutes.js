@@ -10,8 +10,8 @@ subCategoryRoute.use("/:subCategoryId/courses", courseRoutes);
 subCategoryRoute
   .route("/")
   .get(
-    authController.protect,
-    authController.restrictTo("instructor", "admin"),
+    // authController.protect,
+    // authController.restrictTo("instructor", "admin"),
     subCategoryController.getAllsubCategories
   ) //protect?
   .post(
