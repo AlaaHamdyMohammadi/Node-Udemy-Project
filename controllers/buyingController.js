@@ -4,7 +4,7 @@ const stripe = require("stripe")(
 const Course = require("./../models/courseModel");
 
 exports.getCheckoutSession = async(req, res, next) => {
-    try{
+    try{ 
       // 1- Get the currently course
       const course = await Course.findById(req.params.courseID);
 
@@ -13,8 +13,8 @@ exports.getCheckoutSession = async(req, res, next) => {
         //Information about session
         payment_method_types: ["card"],
         success_url: `${req.protocol}://${req.get("host")}/`,
-        success_url: `http://localhost:5173`, //checkout-success
-        // cancel_url: `${}`
+        success_url: `http://localhost:5173/my-learning`, //checkout-success
+        cancel_url: `http://localhost:5173/login`,
         customer_email: req.user.email,
         client_reference_id: req.params.courseID,
 
@@ -32,7 +32,7 @@ exports.getCheckoutSession = async(req, res, next) => {
             quantity: 1,
           },
         ],
-        mode: "payment", 
+        mode: "payment",
       });
       //console.log(session);
 

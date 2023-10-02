@@ -113,7 +113,7 @@ exports.getAllCourse = async (req, res) => {
     }
 
     const page = req.query.page * 1 || 1;
-    const limit = req.query.limit * 1 || 10;
+    const limit = req.query.limit * 1 || 15;
     const skip = (page - 1) * limit;
 
     const courses = await Course.find(JSON.parse(queryStr))
