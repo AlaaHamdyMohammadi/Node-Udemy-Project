@@ -36,7 +36,7 @@ const courseSchema = new mongoose.Schema({
     type: String,
     // required: true
   },
-  quantity: {type: Number}, 
+  // quantity: {type: Number}, 
   createdAt: {
     type: Date,
     default: Date.now,

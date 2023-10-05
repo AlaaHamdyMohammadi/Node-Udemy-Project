@@ -12,6 +12,7 @@ buyingRouter.post("/checkout-session",authController.protect, async(req, res, ne
     try{ 
       // 1- Get the currently course
       //const course = await Course.findById(req.params.courseID);
+      console.log(req.body.cartItems);
       const line_items = req.body.cartItems.map(item => {
         return {
           price_data: {
@@ -20,14 +21,17 @@ buyingRouter.post("/checkout-session",authController.protect, async(req, res, ne
               name: `${item.title} Course`,
               description: item.subTitle,
               // images: [`http://localhost:4000/img/courses/${item.photo}`],
-              images: [item.photo],
+              images: [
+                `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXeHK0UxO2iU4pyDff204SsbHQEpzADk_JtqbeXKsySQGWnYKnG4vroGakDbmpwcwq6Eg&usqp=CAU`,
+              ],
+              // images: [item.photo],
               metadata: {
                 id: item._id,
               },
             },
             unit_amount: item.DiscountPrice * 100, // Amount in cents
           },
-          quantity: 1,
+          quantity: req.body.cartItems.length,
         };
       })
       // 2- Create checkout session
@@ -36,7 +40,7 @@ buyingRouter.post("/checkout-session",authController.protect, async(req, res, ne
         //payment_method_types: ["card"],
         //success_url: `${req.protocol}://${req.get("host")}/`,
         success_url: `http://localhost:5173/my-learning`, //checkout-success
-        cancel_url: `http://localhost:5173/login`,
+        cancel_url: `http://localhost:5173/cart`,
         //customer_email: req.user.email,
         //client_reference_id: req.params.courseID,
 
@@ -44,6 +48,7 @@ buyingRouter.post("/checkout-session",authController.protect, async(req, res, ne
         mode: "payment",
       });
       console.log(session);
+      
 
       // 3- Create session as response to send to the client
       res.status(200).json({
