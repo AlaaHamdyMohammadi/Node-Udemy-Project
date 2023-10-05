@@ -48,7 +48,7 @@ exports.resizeCoursePhoto = (req, res, next) => {
   next();
 };
 
-// exports.getAllCourse = async (req, res) => {
+//work exports.getAllCourse = async (req, res) => {
 //   try {
 //     let filterObj = {};
 //     if (req.params.subCategoryId) {
@@ -139,6 +139,7 @@ exports.getAllCourse = async (req, res) => {
 
 
 
+
 exports.getCourse = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -161,7 +162,7 @@ exports.getCourse = async (req, res) => {
 exports.updateCourse = async (req, res) => {
   try {
     const { id } = req.params;
-
+    console.log('test Update', req.body);
     if (req.file) {
       const photo = req.file.filename;
       console.log(req.file);
@@ -208,12 +209,15 @@ exports.createCourse = async (req, res) => {
     //     message: "No file uploaded. Please upload a file.",
     //   });
     // }
-    
+    console.log("title in creat", req.body);
+
+    const photo = req.file.filename;
+    console.log("pboto in creat", photo);
     //const photo = req.file.filename;
     const newCourse = await Course.create({
       ...req.body,
       instructorId: req.id,
-      //photo,
+      photo,
     });
     //console.log(photoPath)
     res.status(201).json({
