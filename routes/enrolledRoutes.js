@@ -6,7 +6,7 @@ const enrolledRoute = express.Router();
 
 enrolledRoute
   .route("/")
-  .get(enrolledController.getAllEnrolled)
+  .get(authController.protect, enrolledController.getAllEnrolled)
   .post(
     authController.protect,
     authController.restrictTo("user"),

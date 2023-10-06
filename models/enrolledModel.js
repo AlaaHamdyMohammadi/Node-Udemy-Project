@@ -15,6 +15,7 @@ const enrolledSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "Enrolled must belong to a user."],
   },
+  price: {type: Number, required: true},
 });
 
 enrolledSchema.pre(/^find/, function (next) {
