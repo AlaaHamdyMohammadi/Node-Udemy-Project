@@ -29,7 +29,10 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "instructor", "admin"],
     default: "user",
   },
+  lastCourse: {type: String},
   instructorRating: {type: Number},
+  instructorStudents: {type: Number},
+  numberOfCourses: {type: Number},
   password: {
     type: String,
     required: [true, "Please provide a password!"],
