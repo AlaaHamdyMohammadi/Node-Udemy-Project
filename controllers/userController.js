@@ -72,7 +72,7 @@ exports.updateMe = async(req, res, next) => {
   if(req.body.password || req.body.passwordConfirm){
     return next('this route is not for password updates')
   }
-
+ 
   //Update user documents
   const filteredBody = filterObj(req.body, 'username', 'email');
   if(req.file) filteredBody.photo = req.file.filename;
@@ -85,6 +85,21 @@ exports.updateMe = async(req, res, next) => {
     status: "Success",
     data: updatedUser,
   });
+}
+
+exports.deleteMe = async(req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(req.user.id, {active: false});
+    res.status(204).json({
+      status: 'Success',
+      data: null,
+    })
+  } catch (err) {
+    res.status(404).json({
+      status: "Faild",
+      message: err,
+    });
+  }
 }
 
 // exports.getAllUsers = async (req, res) => {

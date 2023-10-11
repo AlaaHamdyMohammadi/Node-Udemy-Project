@@ -113,7 +113,7 @@ exports.getAllCourse = async (req, res) => {
     }
 
     const page = req.query.page * 1 || 1;
-    const limit = req.query.limit * 1 || 15;
+    const limit = req.query.limit * 1 || 60;
     const skip = (page - 1) * limit;
 
     const courses = await Course.find(JSON.parse(queryStr))
@@ -211,9 +211,9 @@ exports.createCourse = async (req, res) => {
     // }
     console.log("title in creat", req.body);
 
-    const photo = req.file.filename;
-    console.log("pboto in creat", photo);
     //const photo = req.file.filename;
+    //console.log("pboto in creat", photo);
+    const photo = req.file.filename;
     const newCourse = await Course.create({
       ...req.body,
       instructorId: req.id,

@@ -31,7 +31,7 @@ buyingRouter.post("/checkout-session",authController.protect, async(req, res, ne
                 id: item._id,
               },
             },
-            unit_amount: item.DiscountPrice * 100, // Amount in cents
+            unit_amount: item.price * 100, // Amount in cents
           },
           quantity: req.body.cartItems.length,
         };
@@ -55,6 +55,8 @@ buyingRouter.post("/checkout-session",authController.protect, async(req, res, ne
         await Enrolled.create({
           course: item._id,
           price: item.price,
+          photo: item.photo,
+          instructor: item.instructor,
           user: req.id,
         });
 

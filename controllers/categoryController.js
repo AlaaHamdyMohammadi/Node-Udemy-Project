@@ -33,8 +33,8 @@ exports.uploadCategoryPhoto = upload.single("photo");
 
 exports.createCategory = async (req, res) => {
   try {
-    // const photo = req.file.filename; {...req.body, photo}
-    const newCategory = await Category.create(req.body);
+    const photo = req.file.filename;
+    const newCategory = await Category.create({ ...req.body, photo });
     res.status(200).json({
       status: "Success",
       data: { newCategory },

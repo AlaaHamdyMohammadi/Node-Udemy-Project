@@ -53,6 +53,11 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -71,6 +76,11 @@ userSchema.pre("save", async function (next) {
   this.passwordConfirm = undefined;
   next();
 });
+
+userSchema.pre(/^find/, function(next){
+  this.find({active: {$ne: false}});
+  next();
+})
 
 userSchema.pre(/^find/, function (next) {
   this.populate({ path: "enrolledCourses" });

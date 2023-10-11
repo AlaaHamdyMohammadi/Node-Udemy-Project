@@ -16,19 +16,20 @@ userRouter.post("/forgetPassword", authController.forgetPassword);
 userRouter.use(authController.protect); //It will protect all routes after this middleware
 
 userRouter.get("/me", userController.getMe, userController.getUser);
-
-userRouter.patch(
-  "/updateMe",
-  userController.uploadUserPhoto,
-  //userController.resizeUserPhoto,
-  userController.updateMe
-);
-
-userRouter.use(authController.restrictTo("admin"));
+userRouter.delete("/deleteMe", userController.deleteMe, userController.getUser);
  
+  userRouter.patch(
+    "/updateMe",
+    userController.uploadUserPhoto,
+    //userController.resizeUserPhoto,
+    userController.updateMe
+  );
+
+//userRouter.use(authController.restrictTo("admin"));
+
 userRouter
   .route("/")
-  .get(userController.getAllUsers)
+  .get(authController.restrictTo("user","admin"),userController.getAllUsers)
   .post(userController.createUser);
 userRouter
   .route("/:id")
@@ -38,6 +39,6 @@ userRouter
     //userController.resizeUserPhoto,
     userController.updateUser
   )
-  .delete(userController.deleteUser);
+  .delete(authController.restrictTo("admin"), userController.deleteUser);
 
 module.exports = userRouter;

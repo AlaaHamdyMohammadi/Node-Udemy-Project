@@ -18,7 +18,7 @@ categoryRoute
   .post(
     authController.protect,
     authController.restrictTo("instructor", "admin"),
-    // categoryController.uploadCategoryPhoto,
+    categoryController.uploadCategoryPhoto,
     categoryController.createCategory
   ); //admin
  

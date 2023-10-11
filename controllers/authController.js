@@ -160,7 +160,7 @@ exports.forgetPassword = async (req, res, next) => {
     return res.status(404).json({
       status: "Faild",
       message: "There is no user with email address",
-    });
+    }); 
   }
   // 2- Generate reset token
   const resetToken = user.createPasswordToken();

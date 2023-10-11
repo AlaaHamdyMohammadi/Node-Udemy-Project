@@ -17,6 +17,7 @@ exports.getAllEnrolled = async (req, res) => {
 
     res.status(200).json({
       status: "success",
+      results: enrolledCourses.length,
       enrolledCourses,
     });
   } catch (err) {
