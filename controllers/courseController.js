@@ -219,7 +219,6 @@ exports.createCourse = async (req, res) => {
       instructorId: req.id,
       photo,
     });
-    //console.log(photoPath)
     res.status(201).json({
       status: "Success",
       data: newCourse,

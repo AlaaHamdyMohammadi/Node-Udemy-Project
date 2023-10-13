@@ -13,6 +13,8 @@ enrolledRoute
     enrolledController.createEnrolled
   );
 
+enrolledRoute.route("/search").get(enrolledController.searchCourses);  
+
 enrolledRoute
   .route("/:id")
   .get(enrolledController.getEnrolled)

@@ -29,6 +29,39 @@ exports.getAllEnrolled = async (req, res) => {
   }
 };
 
+exports.searchCourses = async (req, res) => {
+  try {
+    // Extract the search query from the request parameters or query parameters
+    const searchQuery = req.params.query || req.query.q;
+
+    if (!searchQuery) {
+      return res.status(400).json({
+        status: "Failed",
+        message: "Please provide a search query.",
+      });
+    }
+
+    // Use a search query to find courses that match the criteria
+    const courses = await Enrolled.find({
+      course: { $regex: searchQuery, $options: "i" }, // Case-insensitive search
+    });
+
+    res.status(200).json({
+      status: "Success",
+      results: courses.length,
+      data: {
+        courses,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "Failed",
+      message: err.message,
+    });
+  }
+};
+
+
 exports.getEnrolled = factory.getOne(Enrolled);
 // exports.createEnrolled = factory.createOne(Enrolled);
 exports.updateEnrolled = factory.updateOne(Enrolled);
