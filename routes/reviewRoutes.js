@@ -4,7 +4,7 @@ const authController = require("./../controllers/authController");
 
 const reviewRoute = express.Router({mergeParams: true});
 
-//reviewRoute.use(authController.protect);
+reviewRoute.use(authController.protect);
 
 reviewRoute
   .route("/")

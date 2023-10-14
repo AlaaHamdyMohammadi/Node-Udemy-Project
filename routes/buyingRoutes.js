@@ -8,7 +8,6 @@ const Enrolled = require('./../models/enrolledModel');
 
 const buyingRouter = express.Router();
  
-// buyingRouter.get("/checkout-session/:courseID", authController.protect, buyingController.getCheckoutSession);
 buyingRouter.post("/checkout-session",authController.protect, async(req, res, next) => {
     try{ 
       // 1- Get the currently course
@@ -22,7 +21,6 @@ buyingRouter.post("/checkout-session",authController.protect, async(req, res, ne
             product_data: {
               name: `${item.title} Course`,
               description: item.subTitle,
-              // images: [`http://localhost:4000/img/courses/${item.photo}`],
               images: [
                 `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXeHK0UxO2iU4pyDff204SsbHQEpzADk_JtqbeXKsySQGWnYKnG4vroGakDbmpwcwq6Eg&usqp=CAU`,
               ],
@@ -33,15 +31,15 @@ buyingRouter.post("/checkout-session",authController.protect, async(req, res, ne
             },
             unit_amount: item.price * 100, // Amount in cents
           },
-          quantity: req.body.cartItems.length,
+          quantity: 1,
         };
       })
+          
+
       // 2- Create checkout session
       const session = await stripe.checkout.sessions.create({
         //Information about session
         //payment_method_types: ["card"],
-        //success_url: `${req.protocol}://${req.get("host")}/`,
-        // success_url: `http://localhost:5173/my-learning`, //checkout-success
         success_url: `http://localhost:5173/my-learning?success=true`, //checkout-success
         cancel_url: `http://localhost:5173/cart`,
         //customer_email: req.user.email,
@@ -66,7 +64,7 @@ buyingRouter.post("/checkout-session",authController.protect, async(req, res, ne
       res.status(200).json({
         status: "Success",
         session,
-        courses,
+        courses,        
       });
     }catch(err){
         console.log('Error: ', err);
@@ -76,32 +74,5 @@ buyingRouter.post("/checkout-session",authController.protect, async(req, res, ne
         });
     }
 });
-
-// buyingRouter.get(
-//   "/getPurchasedCourses",
-//   authController.protect,
-//   async (req, res) => {
-//     try {
-//       // Fetch purchased course data based on the authenticated user
-//       const purchasedCourses = await Enrolled.find({
-//         user: req.user._id,
-//       }).populate("course");
-
-//       res.status(200).json({
-//         status: "success",
-//         purchasedCourses,
-//       });
-//     } catch (err) {
-//       console.error("Error fetching purchased courses: ", err);
-//       res.status(500).json({
-//         status: "error",
-//         message: "Failed to fetch purchased courses",
-//       });
-//     }
-//   }
-// );
-
-
-
 
 module.exports = buyingRouter;
