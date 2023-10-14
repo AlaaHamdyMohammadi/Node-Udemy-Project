@@ -41,9 +41,8 @@ exports.searchCourses = async (req, res) => {
       });
     }
 
-    // Use a search query to find courses that match the criteria
     const courses = await Enrolled.find({
-      course: { $regex: searchQuery, $options: "i" }, // Case-insensitive search
+      course: { $regex: searchQuery, $options: "i" }, 
     });
 
     res.status(200).json({
