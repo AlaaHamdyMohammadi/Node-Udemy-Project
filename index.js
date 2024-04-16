@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 
 const userRouter = require('./routes/userRoutes');
-const courseRouter = require('./routes/courseRoutes');
+const courseRouter = require('./courseRoutes');
 const reviewRouter = require("./routes/reviewRoutes");
 const categoryRouter = require('./routes/categoryRoutes');
 const subCategoryRouter = require("./routes/subCategoriesRoutes");
