@@ -1,13 +1,13 @@
 const express = require("express");
 const courseController = require("./../controllers/courseController");
 const authController = require("./../controllers/authController");
-const reviewRoutes = require('./reviewRoutes');
+const reviewRoutes = require("./reviewRoutes");
 
-const courseRouter = express.Router({ mergeParams: true });
+const courseRoute = express.Router({ mergeParams: true });
 
-courseRouter.use("/:courseId/reviews", reviewRoutes);
+courseRoute.use("/:courseId/reviews", reviewRoutes);
 
-courseRouter
+courseRoute
   .route("/")
   .get(
     // authController.protect,
@@ -20,8 +20,8 @@ courseRouter
     courseController.uploadCoursePhoto,
     courseController.resizeCoursePhoto,
     courseController.createCourse
-  );   
-courseRouter
+  );
+courseRoute
   .route("/:id")
   .get(courseController.getCourse)
   .patch(
@@ -35,4 +35,4 @@ courseRouter
     courseController.deleteCourse
   );
 
-module.exports = courseRouter;
+module.exports = courseRoute;
