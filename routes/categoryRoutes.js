@@ -2,11 +2,11 @@ const express = require("express");
 const categoryController = require("./../controllers/categoryController");
 const authController = require("./../controllers/authController");
 const subCategoryRoutes = require('./subCategoriesRoutes'); 
-const coursesRoutes = require('./courseRoutes')
+// const coursesRoutes = require('./courseRoutes')
 const categoryRoute = express.Router();
 
 categoryRoute.use("/:categoryId/subCategories", subCategoryRoutes);
-categoryRoute.use("/:categoryId/courses", coursesRoutes);
+// categoryRoute.use("/:categoryId/courses", coursesRoutes);
 
 categoryRoute
   .route("/")
