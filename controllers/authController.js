@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 
 const tokenFunction = (id) => {
-  jwt.sign({ id }, "This-Is-Node-Project-JWT-Secret.", {
+  jwt.sign({ id }, process.env.SECRET_KEY, {
     expiresIn: "90d",
   });
 };
@@ -62,13 +62,9 @@ exports.login = async (req, res, next) => {
     //3- Send token to the client
     //const token = tokenFunction(user._id); (This calling function not working in login! and I don't have any reason for that.)
 
-    const token = jwt.sign(
-      { id: user._id },
-      "This-Is-Node-Project-JWT-Secret.",
-      {
-        expiresIn: "90d",
-      }
-    );
+    const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
+      expiresIn: "90d",
+    });
 
     res.status(200).json({
       status: "Success",
@@ -240,7 +236,7 @@ exports.forgetPassword = async (req, res, next) => {
 //     // 4- Log the user in, send JWT
 //     const token = jwt.sign(
 //       { id: user._id },
-//       "This-Is-Node-Project-JWT-Secret.",
+//      process.env.SECRET_KEY,
 //       {
 //         expiresIn: "90d",
 //       }
