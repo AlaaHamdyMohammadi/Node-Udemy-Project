@@ -2,7 +2,7 @@ const express = require("express");
 const subCategoryController = require("./../controllers/subCategories");
 const authController = require("./../controllers/authController");
 const courseRoutes = require('./courseRoutes')
-//{mergeParams: true}
+//{mergeParams: true} 
 const subCategoryRoute = express.Router({ mergeParams: true });
 
 subCategoryRoute.use("/:subCategoryId/courses", courseRoutes);

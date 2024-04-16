@@ -35,7 +35,7 @@ exports.getAllsubCategories = async (req, res) => {
       status: "Success",
       results: subCategories.length,
       data: { subCategories },
-    });
+    }); 
   } catch (err) {
     res.status(404).json({
       status: "Faild",
