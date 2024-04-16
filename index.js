@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require("cors");
 const app = express();
+// const fs = require("fs");
+// console.log("Current directory:", process.cwd());
+// console.log("Directory contents:", fs.readdirSync("./"));
 const userRouter = require('./routes/userRoutes');
 const courseRouter = require('./routes/courseRoutes');
 const reviewRouter = require("./routes/reviewRoutes");
