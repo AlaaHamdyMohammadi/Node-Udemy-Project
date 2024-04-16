@@ -50,10 +50,10 @@ app.use('*', function(req, res,next){
 //     })
 // })
 
+require('dotenv').config();
+
 mongoose
-  .connect(
-    "mongodb+srv://GraduationProject:iti-team2@cluster0.daxyxcz.mongodb.net/projectNode?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Database Connected Successfuly");
   })
@@ -63,7 +63,7 @@ mongoose
 
 
 //START SERVER: 
-const port = 4000;
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`App running on port ${port}`);
 })

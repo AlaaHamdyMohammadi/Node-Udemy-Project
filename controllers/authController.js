@@ -3,6 +3,7 @@ const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const User = require("./../models/userModel");
 const sendEmail = require("./../utils/email");
+require("dotenv").config();
 
 const tokenFunction = (id) => {
   jwt.sign({ id }, "This-Is-Node-Project-JWT-Secret.", {
@@ -102,7 +103,7 @@ exports.protect = async (req, res, next) => {
     // 2- Verification token
     const decoded = await promisify(jwt.verify)(
       token,
-      "This-Is-Node-Project-JWT-Secret."
+      process.env.SECRET_KEY
     );
     
 
