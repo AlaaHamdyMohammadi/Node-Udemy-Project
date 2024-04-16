@@ -5,7 +5,7 @@ const app = express();
 // console.log("Current directory:", process.cwd());
 // console.log("Directory contents:", fs.readdirSync("./"));
 const userRouter = require('./routes/userRoutes');
-const courseRouter = require('./routes/courseRoutes');
+// const courseRouter = require('./routes/courseRoutes');
 const reviewRouter = require("./routes/reviewRoutes");
 const categoryRouter = require('./routes/categoryRoutes');
 const subCategoryRouter = require("./routes/subCategoriesRoutes");
@@ -26,7 +26,7 @@ app.use(cors());
 
 //ROUTES:
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/courses", courseRouter);
+// app.use("/api/v1/courses", courseRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/subCategories", subCategoryRouter);
