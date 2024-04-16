@@ -105,7 +105,7 @@ exports.protect = async (req, res, next) => {
       token,
       process.env.SECRET_KEY
     );
-    
+     
 
     // 3- Check if user still exists
     const newUser = await User.findById(decoded.id);
