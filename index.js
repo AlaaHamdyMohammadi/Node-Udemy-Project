@@ -50,8 +50,9 @@ app.use('*', function(req, res,next){
 //     })
 // })
 
-require('dotenv').config();
-
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
+ 
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {

@@ -3,7 +3,8 @@ const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const User = require("./../models/userModel");
 const sendEmail = require("./../utils/email");
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
 
 const tokenFunction = (id) => {
   jwt.sign({ id }, "This-Is-Node-Project-JWT-Secret.", {
